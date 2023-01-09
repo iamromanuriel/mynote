@@ -2,4 +2,10 @@
     <string name="app_name">MyNote</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="question_save_note">¿Estas seguro de guardar los cambios?</string>
+    <string name="question_delete_note">¿Estas seguro de eliminar la nota?</string>
+    <string name="title_new_note">Nueva nota</string>
+    <string name="title_edit_note">Editar nota</string>
+    <string name="search_note">Buscar nota</string>
+    <string name="search_view">Buscar nota</string>
 </resources>

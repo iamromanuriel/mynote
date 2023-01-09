@@ -10,11 +10,11 @@ interface NoteDao {
     fun getAllNote(): LiveData<List<Note>>
 
     @Insert
-    fun insertNote(vararg note: Note)
+    suspend fun insertNote(vararg note: Note)
 
     @Update
-    fun updateNote(note: Note)
+    suspend fun updateNote(note: Note)
 
     @Delete
-    fun deleteNote(note: Note)
+    suspend fun deleteNote(note: Note)
 }

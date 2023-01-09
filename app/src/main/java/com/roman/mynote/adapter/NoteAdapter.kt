@@ -1,18 +1,13 @@
 package com.roman.mynote.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
 import com.roman.mynote.data.model.Note
-import com.roman.mynote.databinding.BottomSheetDialogBinding
-import com.roman.mynote.utils.BottonSheetDialogNote
 
-class NoteAdapter(val listNote: List<Note>): RecyclerView.Adapter<NoteViewHolder>() {
-    var onItemClick: ((Note) -> Unit)? =null
-    var onNavClick: ((Note) ->Unit)?= null
+class NoteAdapter(val callback: (Note) -> Unit) : RecyclerView.Adapter<NoteViewHolder>() {
+    private var listNote = mutableListOf<Note>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return NoteViewHolder(layoutInflater.inflate(R.layout.note_card, parent, false))
@@ -20,15 +15,17 @@ class NoteAdapter(val listNote: List<Note>): RecyclerView.Adapter<NoteViewHolder
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val item = listNote[position]
-        holder.render(item)
-        holder.itemView.setOnClickListener {
-            onItemClick?.invoke(item)
-            onNavClick?.invoke(item)
+        holder.render(item,callback)
 
-        }
     }
 
-    override fun getItemCount(): Int = listNote.size
+    override fun getItemCount(): Int {
+        return listNote.size
+    }
 
+    fun setListNote(list: List<Note>){
+        this.listNote = list.toMutableList()
+        notifyDataSetChanged()
+    }
 
 }

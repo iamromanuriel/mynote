@@ -1,35 +1,27 @@
 package com.roman.mynote.ui
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.roman.mynote.data.database.NoteDatabase
-import com.roman.mynote.data.database.NoteRepositorie
+import com.roman.mynote.data.repository.NoteRepository
 import com.roman.mynote.data.model.Note
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteViewModel(application: Application): AndroidViewModel(application) {
-    val allNote: LiveData<List<Note>>
-    val repositorie: NoteRepositorie
-
-    init{
-        val dao = NoteDatabase.getDatabase(application).note()
-        repositorie = NoteRepositorie(dao)
-        allNote = repositorie.allNote
-    }
+@HiltViewModel
+class NoteViewModel @Inject constructor(private val repository: NoteRepository): ViewModel() {
+    val allNote = repository.allNote
 
     fun insert(note: Note) = viewModelScope.launch(Dispatchers.IO){
-        repositorie.insert(note)
+        repository.insert(note)
     }
 
     fun update(note: Note) = viewModelScope.launch(Dispatchers.IO){
-        repositorie.update(note)
+        repository.update(note)
     }
 
     fun delete(note: Note) = viewModelScope.launch(Dispatchers.IO){
-        repositorie.delete(note)
+        repository.delete(note)
     }
-
 }

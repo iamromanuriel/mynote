@@ -21,6 +21,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private val viewModel : HomeViewModel by viewModels()
 
     private fun initRecyclerView(){
+
         val adapter = NoteAdapter{
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(it))
         }
@@ -45,7 +46,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun initComponent(view: View, savedInstanceState: Bundle?) {
         initRecyclerView()
-        binding.btnAdd.setOnClickListener {
+        binding.buttonAddNote.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(null))
         }
     }

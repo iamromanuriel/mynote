@@ -20,7 +20,7 @@ import javax.inject.Inject
 class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note) {
     private val viewModel : NoteViewModel by viewModels()
     @Inject lateinit var utilsFunctionsNote: UtilsFunctionsNote
-    private val confirmDialog = ConfirmDialog()
+
     private val argNote: NoteFragmentArgs by navArgs()
 
     @Deprecated("Deprecated in Java")
@@ -37,21 +37,16 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note) {
         return when(item.itemId){
             R.id.save ->{
                 if(valueArgs()){
-                    activity?.let { confirmDialog.show(it.supportFragmentManager,"AlertDialog") }
-                    confirmDialog.setMessage(R.string.question_save_note)
-                    confirmDialog.setNote(createNote())
+                     showDialogConfirm { if(it) createNote() }
                 }else{
-                        viewModel.insert(createNote())
+                    viewModel.insert(createNote())
                     findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToHomeFragment())
                 }
 
                 true
             }
             R.id.delete ->{
-                activity?.let { confirmDialog.show(it.supportFragmentManager,"AlertDialog") }
-                confirmDialog.setMessage(R.string.question_delete_note)
-                confirmDialog.setNote(createNote())
-                false
+                true
             }
             android.R.id.home ->{
                 findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToHomeFragment())

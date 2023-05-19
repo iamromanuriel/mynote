@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardBackgroundColor="@color/color_secundary"
     app:cardCornerRadius="10dp">
 
     <RelativeLayout
@@ -55,7 +54,6 @@
 
             <View
                 app:layout_constraintTop_toBottomOf="@+id/txtDescription"
-                android:background="@color/purple_200"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"/>
 
@@ -123,7 +121,6 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@id/container_text_descriptions"
-            android:background="@color/purple_200"
             android:layout_marginHorizontal="5dp"
             />
 

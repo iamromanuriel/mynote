@@ -11,6 +11,8 @@ import androidx.databinding.ViewDataBinding
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewbinding.ViewBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import com.roman.mynote.R
 
 abstract class BaseFragment <B: ViewDataBinding>(val layout: Int): Fragment() {
@@ -38,4 +40,17 @@ abstract class BaseFragment <B: ViewDataBinding>(val layout: Int): Fragment() {
     }
 
     abstract fun initComponent(view: View,savedInstanceState: Bundle?)
+
+    fun showDialogConfirm(result : (Boolean) -> Unit){
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Advertencia")
+            .setMessage("¿Estas seguro de ...?")
+            .setNegativeButton(android.R.string.cancel){dialog, witch->
+                result(false)
+            }
+            .setPositiveButton(android.R.string.ok){dialog, witch ->
+                result(true)
+            }
+            .show()
+    }
 }

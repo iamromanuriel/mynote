@@ -8,4 +8,17 @@
     <string name="title_edit_note">Editar nota</string>
     <string name="search_note">Buscar nota</string>
     <string name="search_view">Buscar nota</string>
+    <string name="requeride">Requerido</string>
+    <string name="msg_not_supported_type">Tipo no soportado</string>
+    <string name="msg_note_deleted">Se ha eliminado la nota</string>
+    <string name="title_detail">Detalle</string>
+    <string name="pin">Anclar</string>
+    <string name="delete">Eliminar</string>
+    <string name="edit">Editar</string>
+    
+    <!--TEXT EXAMPLE-->
+    <string name="lorem_text">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</string>
+    <string name="example_day">17</string>
+    <string name="example_mes">Mayo</string>
+
 </resources>

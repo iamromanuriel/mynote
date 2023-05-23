@@ -8,15 +8,6 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ui.home.HomeFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerNote"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/note_card"/>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/button_add_note"
@@ -28,6 +19,54 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerNote"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+
+                tools:listitem="@layout/note_card"/>
+
+            <!-- NestedScrollingChild goes here (NestedScrollView, RecyclerView, etc.). -->
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/searchbar_scrolling_view_behavior">
+                <!-- Screen content goes here. -->
+            </androidx.core.widget.NestedScrollView>
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.search.SearchBar
+                    android:id="@+id/search_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Buscar" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <com.google.android.material.search.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Buscar"
+                app:layout_anchor="@id/search_bar">
+                <!-- Search suggestions/results go here (ScrollView, RecyclerView, etc.). -->
+            </com.google.android.material.search.SearchView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

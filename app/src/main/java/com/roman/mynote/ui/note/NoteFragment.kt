@@ -18,34 +18,51 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note) {
-    private val viewModel : NoteViewModel by viewModels()
+    private val viewModel : NoteDetailViewModel by viewModels()
     @Inject lateinit var utilsFunctionsNote: UtilsFunctionsNote
 
     private val argNote: NoteFragmentArgs by navArgs()
+
+    override fun initComponent(view: View, savedInstanceState: Bundle?) {
+        showActionbar(true)
+        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
+        viewModel._note.observe(this.viewLifecycleOwner){
+            binding.editTitle.setText(it.title)
+            binding.editNote.setText(it.note)
+        }
+        viewModel.showNote(argNote.argId)
+    }
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_note,menu)
-        if(!valueArgs()){
-            menu.findItem(R.id.delete).setVisible(false)
-        }
+
     }
 
     @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.save ->{
-                if(valueArgs()){
-                     showDialogConfirm { if(it) createNote() }
-                }else{
-                    viewModel.insert(createNote())
-                    findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToHomeFragment())
+                showDialogConfirm (getString(R.string.question_save_note)) {
+                    if (it) {
+                        editNote()
+                        findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToHomeFragment())
+                    }
                 }
 
                 true
             }
             R.id.delete ->{
+                showDialogAlert(getString(R.string.question_delete_note)){
+                    if(it) {
+                        viewModel.delete()
+                        findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToHomeFragment())
+                        showMessageWithSnackbar(getString(R.string.msg_note_deleted))
+                    }
+                }
+
                 true
             }
             android.R.id.home ->{
@@ -56,41 +73,11 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note) {
         }
     }
 
-    private fun valueArgs(): Boolean{
-        return if(argNote.argNote?.id != null) true else false
+    private fun editNote(){
+        val title = binding.editTitle.text.toString()
+        val note = binding.editNote.text.toString()
+        viewModel.update(title,note)
     }
 
-    private fun createNote(): Note{
 
-
-        return if(valueArgs()){
-            Note(
-                binding.editTitle.text.toString(),
-                binding.editNote.text.toString(),
-                utilsFunctionsNote.getDate(),
-                utilsFunctionsNote.getNumColor(),
-                argNote.argNote!!.pinned,
-                argNote.argNote!!.id
-            )
-        }else{
-            Note(
-                binding.editTitle.text.toString(),
-                binding.editNote.text.toString(),
-                utilsFunctionsNote.getDate(),
-                utilsFunctionsNote.getNumColor(),
-                false
-            )
-        }
-    }
-
-    override fun initComponent(view: View, savedInstanceState: Bundle?) {
-        (activity as AppCompatActivity).supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        if(valueArgs()){
-            (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.title_new_note)
-            binding.editTitle.setText(argNote.argNote?.title)
-            binding.editNote.setText(argNote.argNote?.note)
-        }else{
-            (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.title_edit_note)
-        }
-    }
 }

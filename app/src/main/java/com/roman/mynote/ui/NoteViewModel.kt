@@ -13,12 +13,9 @@ import javax.inject.Inject
 class NoteViewModel @Inject constructor(private val repository: NoteRepository): ViewModel() {
     val allNote = repository.allNote
 
-    fun insert(note: Note) = viewModelScope.launch(Dispatchers.IO){
-        repository.insert(note)
-    }
 
     fun update(note: Note) = viewModelScope.launch(Dispatchers.IO){
-        repository.update(note)
+
     }
 
     fun delete(note: Note) = viewModelScope.launch(Dispatchers.IO){

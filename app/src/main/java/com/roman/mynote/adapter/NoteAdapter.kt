@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
 import com.roman.mynote.data.model.Note
 
-class NoteAdapter(val callback: (Note) -> Unit) : RecyclerView.Adapter<NoteViewHolder>() {
+class NoteAdapter(val callback: (Note) -> Unit, val  clickLog:(Note) -> Unit) : RecyclerView.Adapter<NoteViewHolder>() {
     private var listNote = mutableListOf<Note>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -15,7 +15,7 @@ class NoteAdapter(val callback: (Note) -> Unit) : RecyclerView.Adapter<NoteViewH
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val item = listNote[position]
-        holder.render(item,callback)
+        holder.render(item,callback, clickLog)
 
     }
 

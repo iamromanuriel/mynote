@@ -31,6 +31,15 @@
                 android:text="Title"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/image_pind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_pin"
+                android:layout_margin="8dp"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_alignParentEnd="true"
+                />
         </RelativeLayout>
 
         <TextView
@@ -54,5 +63,7 @@
             android:padding="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

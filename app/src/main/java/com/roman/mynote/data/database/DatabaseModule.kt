@@ -21,7 +21,8 @@ class DatabaseModule {
             context,
             Database::class.java,
             Constants.DATABASENAME
-        ).build()
+        )   .fallbackToDestructiveMigration()
+            .build()
     }
 
 }

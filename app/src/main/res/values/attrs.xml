@@ -5,4 +5,6 @@
     <attr name="colorCustomColor1Container" format="color" />
     <attr name="colorOnCustomColor1Container" format="color" />
     <attr name="harmonizeCustomColor1" format="boolean" />
+
+    <attr name="catalogToolbarWithCloseButtonStyle" format="reference"/>
 </resources>

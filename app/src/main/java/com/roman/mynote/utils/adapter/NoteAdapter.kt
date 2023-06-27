@@ -1,12 +1,12 @@
-package com.roman.mynote.adapter
+package com.roman.mynote.utils.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
-import com.roman.mynote.data.model.Note
+import com.roman.mynote.data.database.entity.Note
 
-class NoteAdapter(val callback: (Note) -> Unit, val  clickLog:(Note) -> Unit) : RecyclerView.Adapter<NoteViewHolder>() {
+class NoteAdapter(val callback: (Note) -> Unit, val onLongClick:(Note) -> Unit) : RecyclerView.Adapter<NoteViewHolder>() {
     private var listNote = mutableListOf<Note>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -15,8 +15,7 @@ class NoteAdapter(val callback: (Note) -> Unit, val  clickLog:(Note) -> Unit) : 
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val item = listNote[position]
-        holder.render(item,callback, clickLog)
-
+        holder.render(item,callback, onLongClick)
     }
 
     override fun getItemCount(): Int {
@@ -27,5 +26,4 @@ class NoteAdapter(val callback: (Note) -> Unit, val  clickLog:(Note) -> Unit) : 
         this.listNote = list.toMutableList()
         notifyDataSetChanged()
     }
-
 }

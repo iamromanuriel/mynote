@@ -1,17 +1,15 @@
 package com.roman.mynote.ui.note
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.roman.mynote.R
-import com.roman.mynote.data.model.Note
 import com.roman.mynote.databinding.FragmentNoteBinding
 import com.roman.mynote.ui.BaseFragment
-import com.roman.mynote.ui.NoteViewModel
-import com.roman.mynote.ui.alertdialog.ConfirmDialog
 import com.roman.mynote.utils.UtilsFunctionsNote
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,13 +30,19 @@ class NoteFragment : BaseFragment<FragmentNoteBinding>(R.layout.fragment_note) {
             binding.editNote.setText(it.note)
         }
         viewModel.showNote(argNote.argId)
+
+        viewModel.onStart()
+        //Test with mediatorlivedata
+        viewModel.mediatorLiveData.observe(this.viewLifecycleOwner){listElement ->
+            listElement.forEach { Log.d("TAG",it) }
+        }
+        viewModel.transformationDate.observe(this.viewLifecycleOwner){}
     }
 
     @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_note,menu)
-
     }
 
     @Deprecated("Deprecated in Java")

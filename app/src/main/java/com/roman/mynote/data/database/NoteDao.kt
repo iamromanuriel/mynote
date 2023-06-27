@@ -1,13 +1,13 @@
 package com.roman.mynote.data.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.roman.mynote.data.model.Note
+import com.roman.mynote.data.database.entity.Note
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM note")
-    fun getAllNote(): LiveData<List<Note>>
+    fun getListNote(): Flow<List<Note>>
 
     @Query("SELECT * FROM note WHERE id =:id")
     fun getNoteById(id: Int): Note

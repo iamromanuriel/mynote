@@ -11,6 +11,7 @@
         android:theme="@style/Theme.MyNoteNoActionBar">
         <activity
             android:name=".ui.NoteActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity
             android:name=".ui.main_activity.MainActivity"

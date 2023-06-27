@@ -13,6 +13,7 @@
     <string name="msg_note_deleted">Se ha eliminado la nota</string>
     <string name="title_detail">Detalle</string>
     <string name="pin">Anclar</string>
+    <string name="pint">Desanclar</string>
     <string name="delete">Eliminar</string>
     <string name="edit">Editar</string>
     

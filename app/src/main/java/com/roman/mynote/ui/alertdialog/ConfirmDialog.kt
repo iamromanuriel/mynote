@@ -8,7 +8,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.roman.mynote.R
-import com.roman.mynote.data.model.Note
+import com.roman.mynote.data.database.entity.Note
 import com.roman.mynote.ui.NoteViewModel
 import com.roman.mynote.ui.note.NoteFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint

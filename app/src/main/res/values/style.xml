@@ -19,4 +19,13 @@
         <item name="android:inputType">textMultiLine</item>
         <item name="android:gravity">start|top</item>
     </style>
+
+    <style name="ThemeOverlay.Material3.Catalog.Toolbar.Contextual" parent="">
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+    </style>
+
+    <style name="TextAppearance.Material3.Catalog.Toolbar.Contextual.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">@dimen/m3_toolbar_text_size_title</item>
+    </style>
 </resources>

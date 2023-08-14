@@ -20,7 +20,6 @@ class NewNoteViewModel @Inject constructor(private val repository: NoteRepositor
         ioThread.launch(CoroutineExceptionHandler { _, throwable ->
             _message.postValue(throwable.localizedMessage)
         }) {
-            repository.insert(title, note)
         }
     }
 }

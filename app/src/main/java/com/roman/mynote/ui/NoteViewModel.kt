@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.roman.mynote.data.repository.NoteRepository
-import com.roman.mynote.data.database.entity.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -22,15 +21,6 @@ class NoteViewModel @Inject constructor(private val repository: NoteRepository):
             listDays.postValue(repository.getDaysWeek())
         }
     }
-
-    fun update(note: Note) = viewModelScope.launch(Dispatchers.IO){
-
-    }
-
-    fun delete(note: Note) = viewModelScope.launch(Dispatchers.IO){
-        repository.delete(note)
-    }
-
 
 
 }

@@ -1,9 +1,6 @@
 package com.roman.mynote.utils
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
-import java.util.Date
+
 
 /*
 @Entity(tableName = "TISL")

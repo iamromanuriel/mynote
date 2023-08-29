@@ -20,4 +20,6 @@ interface NoteDao {
     fun update(note: Note)
     @Delete
     fun delete(note: Note)
+
+
 }

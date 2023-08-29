@@ -2,22 +2,25 @@ package com.roman.mynote.ui.main_activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.viewbinding.library.activity.viewBinding
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.roman.mynote.R
 import com.roman.mynote.databinding.ActivityMainBinding
-import com.roman.mynote.ui.BaseFragment
-import com.roman.mynote.ui.note.NoteFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    private val binding: ActivityMainBinding by viewBinding()
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        viewModel.apply {
+
+        }
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController

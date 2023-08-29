@@ -16,10 +16,13 @@
     <string name="pint">Desanclar</string>
     <string name="delete">Eliminar</string>
     <string name="edit">Editar</string>
+    <string name="description_image">Description Image</string>
     
     <!--TEXT EXAMPLE-->
     <string name="lorem_text">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</string>
     <string name="example_day">17</string>
     <string name="example_mes">Mayo</string>
+    <string name="example_date">Hace 3 dias</string>
+    <string name="add_note">Add Note</string>
 
 </resources>

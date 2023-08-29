@@ -4,15 +4,11 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.roman.mynote.data.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class NoteDetailViewModel @Inject constructor(private val repository: NoteRepository): ViewModel() {
+class NoteDetailViewModel @Inject constructor(): ViewModel() {
 
 
     val liveDataColors = MutableLiveData<List<String>>()
@@ -39,14 +35,6 @@ class NoteDetailViewModel @Inject constructor(private val repository: NoteReposi
             mediatorLiveData.value = days.distinct()
         }
 
-    }
-
-
-    fun onStart(){
-        viewModelScope.launch(Dispatchers.IO){
-            liveDataColors.postValue(repository.getListNames())
-            liveDataDays.postValue(repository.getDaysWeek())
-        }
     }
 
 }

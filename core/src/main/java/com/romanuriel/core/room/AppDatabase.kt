@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.romanuriel.core.room.dao.AudioDao
 import com.romanuriel.core.room.dao.CategoryDao
 import com.romanuriel.core.room.dao.NoteDao
+import com.romanuriel.core.room.dao.NoteItemDao
 import com.romanuriel.core.room.dao.ReminderDao
 import com.romanuriel.core.room.entity.Audio
 import com.romanuriel.core.room.entity.Category
@@ -23,4 +24,6 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun noteDao(): NoteDao
     abstract fun reminderDao(): ReminderDao
+
+    abstract fun noteItemDao(): NoteItemDao
 }

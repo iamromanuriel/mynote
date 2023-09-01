@@ -22,7 +22,12 @@ class NoteRepository @Inject constructor(
         return db.noteItemDao().allNote()
     }
 
-    fun insert(note: Note){
-        db.noteDao().insert(note)
+    fun insert(note: Note): Long{
+        return db.noteDao().insert(note)
     }
+
+    fun onPin(id: Long, pin: Boolean){
+
+    }
+
 }

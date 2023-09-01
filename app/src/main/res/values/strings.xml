@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyNote</string>
+    <string name="app_name">My Note</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="question_save_note">¿Estas seguro de guardar los cambios?</string>
@@ -24,5 +24,8 @@
     <string name="example_mes">Mayo</string>
     <string name="example_date">Hace 3 dias</string>
     <string name="add_note">Add Note</string>
+    <string name="user_name">Nombre de usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="sign_in">Inicio de sesión</string>
 
 </resources>

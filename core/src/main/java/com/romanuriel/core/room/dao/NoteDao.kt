@@ -15,7 +15,7 @@ interface NoteDao {
     fun getById(id: Long): Flow<Note>
 
     @Insert(onConflict = REPLACE)
-    fun insert(note: Note)
+    fun insert(note: Note): Long
     @Update
     fun update(note: Note)
     @Delete

@@ -28,4 +28,5 @@
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textSize">@dimen/m3_toolbar_text_size_title</item>
     </style>
+
 </resources>

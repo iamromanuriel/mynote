@@ -1,5 +1,6 @@
 package com.roman.mynote.utils.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,8 @@ import com.roman.mynote.databinding.NoteCardBinding
 import com.romanuriel.core.room.model.NoteItem
 
 class NoteAdapter(
-    private val onClickRoot: () -> Unit
+    private val onClickRoot: (NoteItem) -> Unit,
+    private val onClickPin: (id: Long, pin: Boolean) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private var listNoteItem = mutableListOf<NoteItem>()
@@ -21,10 +23,9 @@ class NoteAdapter(
                 textViewTitle.text = noteItems.title
                 textDate.text = noteItems.dataCreate.toString()
 
-                if(noteItems.pin){
-                    binding.imagePind.visibility = View.VISIBLE
-                }else{
-                    binding.imagePind.visibility = View.GONE
+                imagePind.visibility = View.VISIBLE
+                imagePind.setOnClickListener {
+                    onClickPin(noteItems.id, noteItems.pin)
                 }
             }
         }
@@ -45,6 +46,7 @@ class NoteAdapter(
         holder.build(noteItem)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<NoteItem>){
         this.listNoteItem = list.toMutableList()
         notifyDataSetChanged()

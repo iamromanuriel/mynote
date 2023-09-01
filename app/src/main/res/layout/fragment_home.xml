@@ -6,8 +6,6 @@
     android:background="?attr/colorSurface"
     >
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -25,6 +23,8 @@
         android:layout_gravity="bottom|end"
         app:layout_anchorGravity="bottom|end"
         app:theme="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+        app:iconTint="?attr/colorPrimary"
+        android:textColor="?attr/colorPrimary"
         app:icon="@drawable/ic_note_add"
         android:text="@string/title_new_note"/>
 
@@ -46,7 +46,6 @@
                 app:layout_constraintEnd_toStartOf="@+id/ib_notice"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:navigationIcon="@drawable/ic_delete"
                 />
 
             <ImageButton
@@ -55,18 +54,20 @@
                 android:layout_height="30dp"
                 android:background="?attr/actionBarItemBackground"
                 android:src="@drawable/ic_notifications_none"
+                app:tint="?attr/colorPrimary"
                 android:layout_marginHorizontal="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/iv_user_profile_image"
                 app:layout_constraintEnd_toStartOf="@+id/iv_user_profile_image"
                 app:layout_constraintTop_toTopOf="@+id/iv_user_profile_image" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/iv_user_profile_image"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="?attr/actionBarItemBackground"
                 android:src="@drawable/ic_person_24"
                 android:layout_marginHorizontal="12dp"
+                app:tint="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

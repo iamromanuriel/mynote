@@ -10,17 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
 import com.roman.mynote.utils.adapter.NoteAdapter
-import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
-import com.romanuriel.utils.showLoading
+import com.romanuriel.core.Task
+import com.romanuriel.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -31,29 +29,45 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapterNote = NoteAdapter {  }
+        adapterNote = NoteAdapter ({ noteItem ->
+
+        }
+        ) { id, pin ->
+            viewModel.onPin(id, pin)
+        }
         binding.apply {
             setRecyclerView()
         }
         binding.extendedActionAddNewNote.setOnClickListener(this)
-        observeData()
+        observeDataList()
+        observeDataResultTask()
     }
 
-    private fun observeData(){
-
+    private fun observeDataList(){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.notes.collect{uiState ->
                     when(uiState){
-                        is NoteHomeUiState.Loading ->{
-
-                        }
-
+                        is NoteHomeUiState.Loading ->{  }
                         is NoteHomeUiState.Success ->{
-                            Log.d("TAG","${uiState.list}")
+                            Log.d("TAG-LIST-NOTE","${uiState.list}")
                             adapterNote.setData(uiState.list)
                         }
+                        else -> {}
                     }
+                }
+            }
+        }
+    }
+
+    private fun observeDataResultTask(){
+        viewModel.taskFirebase.observe(this.viewLifecycleOwner){result ->
+            when(result){
+                is Task.Success ->{
+
+                }
+                is Task.Error ->{
+                    binding.root.showSnackBar(result.exception.localizedMessage?:"",24)
                 }
             }
         }
@@ -62,7 +76,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
     private fun FragmentHomeBinding.setRecyclerView() = this.recyclerView.apply {
         layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = adapterNote
-
     }
 
     override fun onClick(view: View) {

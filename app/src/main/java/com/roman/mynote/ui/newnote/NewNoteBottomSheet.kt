@@ -44,9 +44,7 @@ class NewNoteBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_dialog_new_note
                 is Task.Error ->{
                     root.showSnackBar(task.exception.localizedMessage?:"", 12)
                 }
-                is Task.Success ->{
-                    dismiss()
-                }
+                is Task.Success ->{ dismiss() }
             }
         }
     }

@@ -52,12 +52,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/id_text_subtitle"
+                        android:text="@string/sign_in"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_margin="@dimen/margin_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/outlined_text_field_user_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/id_text_subtitle"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_margin="@dimen/margin_small"
@@ -97,6 +106,41 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_margin="@dimen/margin_small"/>
+
+                    <TextView
+                        android:id="@+id/text_sign_up"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sign_up"
+                        android:textStyle="bold"
+                        android:textColor="?attr/colorPrimary"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:layout_marginBottom="@dimen/margin_medium"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/action_auth" />
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/div_right"
+                        android:layout_width="100dp"
+                        android:layout_height="1dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/text_sign_up"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_sign_up"
+                        app:layout_constraintEnd_toStartOf="@+id/text_sign_up"/>
+
+
+                    <com.google.android.material.divider.MaterialDivider
+                        android:id="@+id/div_light"
+                        android:layout_width="100dp"
+                        android:layout_height="1dp"
+                        app:layout_constraintStart_toEndOf="@+id/text_sign_up"
+                        app:layout_constraintTop_toTopOf="@+id/text_sign_up"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_sign_up"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
+import com.roman.mynote.ui.auth.AuthDialog
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
 import com.roman.mynote.utils.adapter.NoteAdapter
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
@@ -39,6 +40,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             setRecyclerView()
         }
         binding.extendedActionAddNewNote.setOnClickListener(this)
+        binding.ivUserProfileImage.setOnClickListener(this)
         observeDataList()
         observeDataResultTask()
     }
@@ -82,6 +84,11 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         when (view.id) {
             binding.extendedActionAddNewNote.id ->{
                 val action = NewNoteBottomSheet()
+                activity?.let { action.show(it.supportFragmentManager, action.tag) }
+            }
+
+            binding.ivUserProfileImage.id ->{
+                val action = AuthDialog()
                 activity?.let { action.show(it.supportFragmentManager, action.tag) }
             }
         }

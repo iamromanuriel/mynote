@@ -27,5 +27,6 @@
     <string name="user_name">Nombre de usuario</string>
     <string name="password">Contraseña</string>
     <string name="sign_in">Inicio de sesión</string>
+    <string name="sign_up">Registrarse</string>
 
 </resources>

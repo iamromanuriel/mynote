@@ -8,7 +8,8 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.roman.mynote.ui.NoteViewModel
-import com.roman.mynote.ui.note.NoteFragmentDirections
+import com.roman.mynote.ui.notedetail.NoteDetailFragment
+import com.roman.mynote.ui.notedetail.NoteDetailFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,7 +27,7 @@ class ConfirmDialog: DialogFragment() {
                 .setPositiveButton(android.R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
                         actionConfirm()
-                        findNavController().navigate(NoteFragmentDirections.actionNoteFragmentToHomeFragment())
+                        findNavController().navigate(NoteDetailFragmentDirections.actionNoteFragmentToHomeFragment())
                         dismiss()
                     })
                 .setNegativeButton(android.R.string.cancel,

@@ -2,6 +2,7 @@ package com.romanuriel.core.room.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import com.romanuriel.core.room.entity.Category
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.core.room.model.NoteItemResult
 import kotlinx.coroutines.flow.Flow
@@ -23,4 +24,8 @@ interface NoteItemDao {
             "SELECT id, categoryId, title, dateCreate AS dataCreate, 0 AS pin FROM AUDIO_NOTE")
     fun allNote(): Flow<List<NoteItem>>
 
+    @Query("DELETE FROM NOTE WHERE id =:id")
+    suspend fun deleteByIdAndCategory(id: Long): Int
+
 }
+

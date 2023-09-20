@@ -12,7 +12,8 @@ class NoteRepository @Inject constructor(
     private val db: AppDatabase
 ) {
 
-    fun searchNoteByTitle(text: String
+    fun searchNoteByTitle(
+        text: String
     ): Flow<List<NoteItemResult>> {
         return db.noteItemDao().searchItemByTitle(text)
     }
@@ -26,8 +27,8 @@ class NoteRepository @Inject constructor(
         return db.noteDao().insert(note)
     }
 
-    fun onPin(id: Long, pin: Boolean){
-
+    suspend fun deleteById(id: Long): Int{
+        return db.noteItemDao().deleteByIdAndCategory(id)
     }
 
 }

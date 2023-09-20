@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android" android:drawable="@drawable/ic_audio">
+    <target
+        android:animation="@animator/rotation_animator"
+        android:name="rotation"/>
+    <target
+        android:animation="@animator/rotation_animator"
+        android:name="v"/>
+</animated-vector>

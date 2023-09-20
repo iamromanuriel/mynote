@@ -20,9 +20,9 @@
     </fragment>
     <fragment
         android:id="@+id/noteFragment"
-        android:name="com.roman.mynote.ui.note.NoteFragment"
+        android:name="com.roman.mynote.ui.notedetail.NoteDetailFragment"
         android:label="fragment_note"
-        tools:layout="@layout/fragment_note" >
+        tools:layout="@layout/fragment_detail_note" >
         <action
             android:id="@+id/action_noteFragment_to_homeFragment"
             app:destination="@id/homeFragment" />

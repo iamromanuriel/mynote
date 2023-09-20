@@ -23,9 +23,6 @@
         android:layout_gravity="bottom|end"
         app:layout_anchorGravity="bottom|end"
         app:theme="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-        app:iconTint="?attr/colorPrimary"
-        android:textColor="?attr/colorPrimary"
-        app:icon="@drawable/ic_note_add"
         android:text="@string/title_new_note"/>
 
     <com.google.android.material.appbar.AppBarLayout
@@ -82,7 +79,7 @@
         app:layout_anchor="@id/search_bar">
 
         <include
-            android:id="@+id/search_ext"
+            android:id="@+id/include_result"
             layout="@layout/home_search" />
     </com.google.android.material.search.SearchView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

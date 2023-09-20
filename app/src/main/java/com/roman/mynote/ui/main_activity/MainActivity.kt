@@ -26,10 +26,4 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
     }
-
-    fun transactionNote(fragment: Fragment){
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.nav_host_fragment,fragment).commit()
-    }
-
 }

@@ -24,8 +24,8 @@ class NoteAdapter(
                 textDate.text = noteItems.dataCreate.toString()
 
                 imagePind.visibility = View.VISIBLE
-                imagePind.setOnClickListener {
-                    onClickPin(noteItems.id, noteItems.pin)
+                binding.root.setOnClickListener {
+                    onClickRoot(noteItems)
                 }
             }
         }

@@ -14,7 +14,6 @@ class MainViewModel @Inject constructor(mainRepository: MainRepository): ViewMod
 
     init {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
-            Log.d("TAG","Error exception ${throwable.localizedMessage}")
         }){
             mainRepository.initDatabase()
         }

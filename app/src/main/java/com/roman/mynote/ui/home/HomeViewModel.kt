@@ -11,6 +11,7 @@ import com.romanuriel.core.firebase.InsertNoteFirebase
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.domain.usescase.SearchNoteUseCase
 import com.romanuriel.domain.usescase.ToListAllNoteUseCase
+import com.romanuriel.utils.ResultSearchNoteData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +25,12 @@ class HomeViewModel @Inject constructor(
     private val toListAllNoteUseCase: ToListAllNoteUseCase,
     private val insertNoteFirebase: InsertNoteFirebase
 ): ViewModel() {
+    private val listResult = listOf<ResultSearchNoteData>(
+        ResultSearchNoteData(1,"Nota 1"),
+        ResultSearchNoteData(2, "Nota 2"),
+        ResultSearchNoteData(3, "Nota 3")
+    )
+
     private val _stateNote = MutableStateFlow<NoteHomeUiState>(NoteHomeUiState.Loading)
     val notes: StateFlow<NoteHomeUiState>
         get() = _stateNote
@@ -45,6 +52,9 @@ class HomeViewModel @Inject constructor(
                     _stateNote.value = NoteHomeUiState.Empty
                 }else{
                     _stateNote.value = NoteHomeUiState.Success(it)
+                    _stateNoteResult.value = NoteHomeResultUiState.Success(
+                        listResult
+                    )
                 }
             }
 
@@ -64,5 +74,7 @@ class HomeViewModel @Inject constructor(
 
         }
     }
+
+
 
 }

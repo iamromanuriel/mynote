@@ -26,7 +26,10 @@
     <string name="add_note">Add Note</string>
     <string name="user_name">Nombre de usuario</string>
     <string name="password">Contraseña</string>
+    <string name="password_repeat">Repetir contraseña</string>
     <string name="sign_in">Inicio de sesión</string>
     <string name="sign_up">Registrarse</string>
+    <string name="example_result">list mark</string>
+
 
 </resources>

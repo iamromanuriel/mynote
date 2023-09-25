@@ -24,12 +24,11 @@ class NoteAdapter(
                 textDate.text = noteItems.dataCreate.toString()
 
                 imagePind.visibility = View.VISIBLE
-                binding.root.setOnClickListener {
+                binding.notesContainer.setOnClickListener {
                     onClickRoot(noteItems)
                 }
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
@@ -47,7 +46,7 @@ class NoteAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<NoteItem>){
+    fun setData(list: List<NoteItem>) {
         this.listNoteItem = list.toMutableList()
         notifyDataSetChanged()
     }

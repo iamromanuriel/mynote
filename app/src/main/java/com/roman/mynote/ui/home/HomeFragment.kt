@@ -71,7 +71,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                     when(uiState){
                         is NoteHomeUiState.Loading ->{  }
                         is NoteHomeUiState.Success ->{
-
                             adapterNote.setData(uiState.list)
                         }
                         else -> {}

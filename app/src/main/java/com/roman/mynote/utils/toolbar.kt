@@ -2,9 +2,9 @@
 
 package com.roman.mynote.utils
 
+import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.core.view.isVisible
 import com.google.android.material.materialswitch.MaterialSwitch
 import com.roman.mynote.R
 import com.roman.mynote.databinding.BarActionLayoutBinding
@@ -36,7 +36,7 @@ fun BarActionLayoutBinding.set(toolbarModel: ToolbarModel) = this.apply {
     return@apply
     toolbarModel.endIcon?.let {
         materialButtonEnd.apply {
-            isVisible = true
+            visibility = View.VISIBLE
             setIconResource(it)
             setOnClickListener { toolbarModel.endAction() }
         }

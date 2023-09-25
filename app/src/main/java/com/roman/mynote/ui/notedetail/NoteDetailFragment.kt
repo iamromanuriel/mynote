@@ -38,7 +38,8 @@ class NoteDetailFragment : Fragment(R.layout.fragment_detail_note) {
         set(
             ToolbarModel(
                 title = R.string.title_detail,
-                action = findNavController()::navigateUp
+                action = findNavController()::navigateUp,
+                endIcon = R.drawable.baseline_more_vert_24
             )
         )
     }

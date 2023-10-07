@@ -3,6 +3,7 @@ package com.romanuriel.core.room.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.romanuriel.core.room.entity.Category
+import com.romanuriel.core.room.model.NoteDetail
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.core.room.model.NoteItemResult
 import kotlinx.coroutines.flow.Flow
@@ -17,15 +18,14 @@ interface NoteItemDao {
     fun searchItemByTitle(text: String): Flow<List<NoteItemResult>>
 
 
-    @Query("SELECT id, categoryId, title, dateCreate AS dataCreate, 0 AS pin FROM NOTE " +
-            "UNION " +
-            "SELECT id, null AS categoryId, title, datetime AS dataCreate, 0 AS  pin FROM REMINDERS " +
-            "UNION " +
-            "SELECT id, categoryId, title, dateCreate AS dataCreate, 0 AS pin FROM AUDIO_NOTE")
+    @Query("SELECT id, categoryId, title, dateCreate AS dataCreate,content,  0 AS pin FROM NOTE")
     fun allNote(): Flow<List<NoteItem>>
 
     @Query("DELETE FROM NOTE WHERE id =:id")
     suspend fun deleteByIdAndCategory(id: Long): Int
+
+    @Query("SELECT id, title, content FROM NOTE WHERE id =:id")
+    fun getNoteDetailById(id: Long): Flow<NoteDetail>
 
 }
 

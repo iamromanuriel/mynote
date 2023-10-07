@@ -2,6 +2,7 @@ package com.romanuriel.domain.repository
 
 import com.romanuriel.core.room.AppDatabase
 import com.romanuriel.core.room.entity.Note
+import com.romanuriel.core.room.model.NoteDetail
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.core.room.model.NoteItemResult
 import kotlinx.coroutines.flow.Flow
@@ -29,6 +30,9 @@ class NoteRepository @Inject constructor(
 
     suspend fun deleteById(id: Long): Int{
         return db.noteItemDao().deleteByIdAndCategory(id)
+    }
+    fun getNoteDetailById(id: Long): Flow<NoteDetail>{
+        return db.noteItemDao().getNoteDetailById(id)
     }
 
 }

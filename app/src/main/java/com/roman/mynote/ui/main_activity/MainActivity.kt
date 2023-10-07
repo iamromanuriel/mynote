@@ -10,6 +10,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.roman.mynote.R
 import com.roman.mynote.databinding.ActivityMainBinding
 import com.roman.mynote.utils.TimeManager
+import com.romanuriel.utils.TypeCategory
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 import javax.inject.Inject
@@ -19,23 +20,16 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by viewBinding()
     private val viewModel: MainViewModel by viewModels()
 
-    @Inject lateinit var timeManager: TimeManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        viewModel
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
 
-        val currentDate = Date("Thu Sep 21 18:41:55 CST 2023") // Fecha y hora actual
-        val pastDate = Date(currentDate.time - 4000)
 
-        val timeAgo = timeManager.getTimeAgo(pastDate)
-
-        Log.d("TAG-TIME",currentDate.toString())
-        Log.d("TAG-TIME", timeAgo)
     }
 }

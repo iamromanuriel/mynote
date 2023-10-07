@@ -45,6 +45,12 @@ class AuthDialog : DialogFragment(){
 
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+    }
+
 
     private fun LayoutAuthBinding.changeMode() = this.apply {
         textAuth.setOnClickListener {
@@ -53,6 +59,7 @@ class AuthDialog : DialogFragment(){
                 duration = 300
                 interpolator = AccelerateDecelerateInterpolator()
             })
+            viewModel.changeType(true)
             outlinedTextFieldPasswordRepeat.visibility = if (isVisible) View.GONE else View.VISIBLE
         }
     }

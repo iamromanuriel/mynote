@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
@@ -20,6 +21,10 @@ import com.roman.mynote.ui.auth.AuthDialog
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
 import com.roman.mynote.utils.adapter.NoteAdapter
 import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
+import com.roman.mynote.utils.adapter.SwipeToLeftCallback
+import com.roman.mynote.utils.notification.NotificationHelper
+import com.roman.mynote.utils.notification.NotificationModel
+import com.roman.mynote.utils.notification.TypeNotification
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
 import com.romanuriel.core.Task
@@ -37,7 +42,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapterNote = NoteAdapter({ noteItem ->
+
+
+        //Add Listener MotionLayout
+        adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
         }
         ) { id, pin ->
@@ -48,10 +56,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
         binding.apply {
             setRecyclerView()
+            onRefresh()
             setRecyclerViewSearch()
         }
         binding.extendedActionAddNewNote.setOnClickListener(this)
         binding.ivUserProfileImage.setOnClickListener(this)
+        binding.ibNotice.setOnClickListener(this)
         observeDataList()
 
         adapterResult.setData(listOf<ResultSearchNoteData>(
@@ -71,7 +81,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                     when(uiState){
                         is NoteHomeUiState.Loading ->{  }
                         is NoteHomeUiState.Success ->{
+                            Log.d("TAG-RESULT-NOTE",uiState.list.toString())
                             adapterNote.setData(uiState.list)
+                            val itemTouchHelper = ItemTouchHelper(SwipeToLeftCallback(adapterNote){
+
+                            })
+                            itemTouchHelper.attachToRecyclerView(binding.recyclerView)
                         }
                         else -> {}
                     }
@@ -120,6 +135,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         }
     }
 
+    private fun FragmentHomeBinding.onRefresh() = this.apply {
+        swipeRefresh.setOnRefreshListener { viewModel.onListNote() }
+    }
+
     private fun FragmentHomeBinding.setRecyclerView() = this.recyclerView.apply {
         layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = adapterNote
@@ -129,6 +148,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         adapter = adapterResult
     }
+
 
     override fun onClick(view: View) {
         when (view.id) {
@@ -140,6 +160,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             binding.ivUserProfileImage.id ->{
                 val action = AuthDialog()
                 activity?.let { action.show(it.supportFragmentManager, action.tag) }
+            }
+            binding.ibNotice.id ->{
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlertFragment())
             }
         }
     }

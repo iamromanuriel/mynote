@@ -1,5 +1,6 @@
 package com.roman.mynote.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -46,8 +48,14 @@ class HomeViewModel @Inject constructor(
 
 
     init {
-        viewModelScope.launch {
-            toListAllNoteUseCase.invoke().collect{it ->
+        onListNote()
+    }
+
+    fun onListNote(){
+        viewModelScope.launch (CoroutineExceptionHandler { _, throwable ->
+            _stateNote.value = NoteHomeUiState.Error(throwable.localizedMessage)
+        }){
+            toListAllNoteUseCase.invoke().collect{
                 if(it.isEmpty()){
                     _stateNote.value = NoteHomeUiState.Empty
                 }else{
@@ -57,7 +65,6 @@ class HomeViewModel @Inject constructor(
                     )
                 }
             }
-
         }
     }
 

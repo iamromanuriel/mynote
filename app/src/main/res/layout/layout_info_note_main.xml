@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:src="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"
+        android:src="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"
         android:background="?attr/actionBarItemBackground"
         android:padding="@dimen/padding_medium"
         android:layout_margin="@dimen/margin_medium"/>
@@ -32,10 +32,17 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/size_title"
             android:textStyle="bold"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Reunion de fin de mes" />
+            tools:text="Reunion de fin de mes"
+            tools:ignore="SpUsage" />
 
         <TextView
             android:id="@+id/text_create_date"

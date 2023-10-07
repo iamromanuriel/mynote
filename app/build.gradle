@@ -73,6 +73,9 @@ dependencies {
 
     implementation 'com.airbnb.android:lottie:6.0.0'
     implementation 'com.github.yogacp:android-viewbinding:1.0.4'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }
 
 kapt {

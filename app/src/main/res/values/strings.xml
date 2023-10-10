@@ -18,6 +18,7 @@
     <string name="edit">Editar</string>
     <string name="description_image">Description Image</string>
     <string name="notice">Novedades</string>
+    <string name="setting">Ajustes</string>
     
     <!--TEXT EXAMPLE-->
     <string name="lorem_text">Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen.</string>
@@ -40,4 +41,8 @@
     <string name="time_minute"> m </string>
     <string name="time_hour"> Hora </string>
     <string name="time_yesterday">Ayer</string>
+    <string name="description_notification">Personaliza las notificaciones que recibiras</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="account">Cuenta</string>
+    <string name="text_example_name_audio">Audio871295</string>
 </resources>

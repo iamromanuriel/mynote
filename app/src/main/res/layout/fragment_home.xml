@@ -26,16 +26,14 @@
 
 
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/extended_action_add_new_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         app:layout_anchorGravity="bottom|end"
-        app:theme="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
-        app:icon="@drawable/ic_add"
-        android:text="@string/title_new_note"/>
+        android:src="@drawable/ic_add"/>
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -74,7 +72,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="?attr/actionBarItemBackground"
-                android:src="@drawable/ic_person_24"
+                android:src="@drawable/baseline_settings"
                 android:layout_marginHorizontal="12dp"
                 app:tint="?attr/colorPrimary"
                 app:layout_constraintBottom_toBottomOf="parent"

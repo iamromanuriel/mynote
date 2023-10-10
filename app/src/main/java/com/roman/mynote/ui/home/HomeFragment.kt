@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
+import android.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -19,6 +20,7 @@ import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
 import com.roman.mynote.ui.auth.AuthDialog
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
+import com.roman.mynote.ui.note_audio.RecordAudioDialog
 import com.roman.mynote.utils.adapter.NoteAdapter
 import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
 import com.roman.mynote.utils.adapter.SwipeToLeftCallback
@@ -40,10 +42,13 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
     private lateinit var adapterNote : NoteAdapter
     private lateinit var adapterResult: NoteResultSearchAdapter
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val popupMenu = PopupMenu(requireContext(),binding.extendedActionAddNewNote)
+        popupMenu.inflate(R.menu.menu_new_note)
 
-
+        binding.extendedActionAddNewNote.setOnClickListener { popupMenu.show() }
         //Add Listener MotionLayout
         adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
@@ -57,9 +62,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         binding.apply {
             setRecyclerView()
             onRefresh()
-            setRecyclerViewSearch()
         }
-        binding.extendedActionAddNewNote.setOnClickListener(this)
+        //binding.extendedActionAddNewNote.setOnClickListener(this)
         binding.ivUserProfileImage.setOnClickListener(this)
         binding.ibNotice.setOnClickListener(this)
         observeDataList()
@@ -69,7 +73,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             ResultSearchNoteData(2, "Nota 2"),
             ResultSearchNoteData(3, "Nota 3")
         ))
-        binding.includeResult.recyclerViewSearch.layoutManager = LinearLayoutManager(requireContext())
+        //binding.includeResult.recyclerViewSearch.layoutManager = LinearLayoutManager(requireContext())
 
         observerDataResult()
     }
@@ -144,22 +148,22 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         adapter = adapterNote
     }
 
-    private fun FragmentHomeBinding.setRecyclerViewSearch() = this.includeResult.recyclerViewSearch.apply{
-        layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
-        adapter = adapterResult
-    }
+
 
 
     override fun onClick(view: View) {
         when (view.id) {
             binding.extendedActionAddNewNote.id ->{
-                val action = NewNoteBottomSheet()
-                activity?.let { action.show(it.supportFragmentManager, action.tag) }
+
+                val button = binding.extendedActionAddNewNote
+                //val audio = RecordAudioDialog()
+
+                //activity?.let { audio.show(it.supportFragmentManager, audio.tag) }
+
             }
 
             binding.ivUserProfileImage.id ->{
-                val action = AuthDialog()
-                activity?.let { action.show(it.supportFragmentManager, action.tag) }
+                val action = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingFragment())
             }
             binding.ibNotice.id ->{
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlertFragment())

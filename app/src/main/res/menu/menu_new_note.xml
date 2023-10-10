@@ -2,8 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/save_new_note"
-        android:title="new"
-        android:icon="@drawable/ic_save"
+        android:id="@+id/note"
+        android:title="Nota"
+        android:icon="@drawable/ic_note_add"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/audio"
+        android:title="audio"
+        android:icon="@drawable/ic_audio"
+        android:iconTint="@android:color/white"
+        app:showAsAction="always"/>
+
+
+    <item
+        android:id="@+id/remminder"
+        android:title="Recordatorio"
+        android:icon="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"
+        android:iconTint="@android:color/white"
         app:showAsAction="always"/>
 </menu>

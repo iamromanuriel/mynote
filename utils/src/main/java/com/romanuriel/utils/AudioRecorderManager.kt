@@ -1,40 +1,40 @@
 package com.romanuriel.utils
 
+import android.Manifest
+import android.app.Application
+import android.content.pm.PackageManager
 import android.media.MediaRecorder
-import android.os.Environment
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AudioRecorderManager {
-    private var mediaRecorder: MediaRecorder? = null
-    private val outputFile: String
-    private val nameFile:String = ""
-    init {
-        outputFile = Environment.getExternalStorageDirectory().absolutePath + "/$nameFile.3hp"
-    }
+class AudioRecorderManager(private val application: Application) {
+    private lateinit var mediaRecorder: MediaRecorder
+    private var fileName = ""
+    fun startRecording() {
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setOutputFile(fileName)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
-    fun start(){
-        if(mediaRecorder != null){
-            throw IllegalArgumentException("La grebacion ya esta en curso.")
+            try {
+
+            }catch (e: Throwable){
+                Log.d("Exception-media-recorder",e.localizedMessage)
+            }
+            start()
         }
-
-        mediaRecorder = MediaRecorder()
-        mediaRecorder?.setAudioSource(MediaRecorder.AudioSource.MIC)
-        mediaRecorder?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-        mediaRecorder?.setOutputFile(outputFile)
-        mediaRecorder?.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-
-        mediaRecorder?.prepare()
-        mediaRecorder?.start()
     }
 
-    fun stopRecording(){
-        mediaRecorder?.apply {
-            stop()
-            release()
-        }
-        mediaRecorder = null
+    fun setName(name: String) {this.fileName = name}
+
+    private fun isRecordingPermissionGranted(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            application,
+            Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    fun getOutputFile(): String{
-        return outputFile
-    }
 }

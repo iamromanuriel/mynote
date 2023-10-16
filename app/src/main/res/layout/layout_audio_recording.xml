@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardCornerRadius="@dimen/radius_car_dialog"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -25,7 +26,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Grabando..." />
+                tools:text="Grabando..."
+                android:visibility="invisible"
+                tools:visibility="visible"/>
 
 
             <ImageView
@@ -43,13 +46,15 @@
 
             <TextView
                 android:id="@+id/text_time"
-                android:text="1:46"
+                tools:text="1:46"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
+                android:visibility="invisible"
+                tools:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@id/image_mic"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -72,6 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
+                android:visibility="gone"
+                tools:visibility="visible"
                 app:icon="@drawable/baseline_pause_circle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -83,7 +90,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_small"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@+id/btn_pause"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -147,6 +154,8 @@
                     android:backgroundTint="?attr/colorSurface"
                     app:icon="@drawable/ic_save"
                     app:iconTint="?attr/colorPrimary"
+                    android:visibility="gone"
+                    tools:visibility="visible"
                     />
             </androidx.constraintlayout.widget.ConstraintLayout>
 

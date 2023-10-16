@@ -68,6 +68,12 @@
         <item name="harmonizeCustomColor1">true</item>
         <item name="colorPrimaryInverse">@color/md_theme_light_inversePrimary</item>
     </style>
+    
+    
+    <style name="ItemList" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">0dp</item>
+    </style>
 
 
     <style name="Theme.customSplash" parent="Theme.SplashScreen">

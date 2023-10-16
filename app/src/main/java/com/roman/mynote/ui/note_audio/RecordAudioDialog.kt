@@ -6,6 +6,7 @@ import android.viewbinding.library.fragment.viewBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.roman.mynote.R
 import com.roman.mynote.databinding.LayoutAudioRecordingBinding
+import com.romanuriel.utils.AudioRecorderManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,9 +14,17 @@ class RecordAudioDialog : BottomSheetDialogFragment(R.layout.layout_audio_record
 
     private val binding: LayoutAudioRecordingBinding by viewBinding()
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+    }
+
+    private fun LayoutAudioRecordingBinding.onRecorder() = this.apply {
+    }
+
+
+    private fun LayoutAudioRecordingBinding.close() = this.apply {
+        buttonClose.setOnClickListener { dismiss() }
     }
 
 

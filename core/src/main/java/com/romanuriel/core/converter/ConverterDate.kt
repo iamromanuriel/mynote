@@ -5,13 +5,13 @@ import java.util.Date
 
 class ConverterDate {
     @TypeConverter
-    fun fromTimesConverter(value: String): Date{
-        return Date(value)
+    fun fromTimesConverter(value: Long?): Date?{
+        return if(value == null) null else Date(value)
     }
 
     @TypeConverter
-    fun dateToTimestamp(date: Date?): String?{
-        return date?.toString()
+    fun dateToTimestamp(date: Date?): Long?{
+        return date?.time
     }
 }
 

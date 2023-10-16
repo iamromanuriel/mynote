@@ -94,6 +94,27 @@
             tools:text="Faltan: 13 Horas"/>
 
 
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/material_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/icon_reference"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginVertical="@dimen/margin_small"/>
+
+    <TextView
+        android:id="@+id/content_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="@string/example_description_notice"
+        android:layout_marginVertical="@dimen/margin_small"
+        app:layout_constraintTop_toBottomOf="@+id/material_divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,7 +53,7 @@ class HomeViewModel @Inject constructor(
 
     fun onListNote(){
         viewModelScope.launch (CoroutineExceptionHandler { _, throwable ->
-            _stateNote.value = NoteHomeUiState.Error(throwable.localizedMessage)
+            _stateNote.value = NoteHomeUiState.Error(throwable.localizedMessage?:"")
         }){
             toListAllNoteUseCase.invoke().collect{
                 if(it.isEmpty()){

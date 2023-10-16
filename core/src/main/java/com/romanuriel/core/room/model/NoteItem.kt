@@ -5,7 +5,7 @@ data class NoteItem(
     val id: Long,
     val categoryId: Long?,
     val title: String,
-    val dataCreate: Long,
+    val dataCreate: Long?,
     val content: String? = "",
-    var pin: Boolean
+    var pin: Boolean?= false
 )

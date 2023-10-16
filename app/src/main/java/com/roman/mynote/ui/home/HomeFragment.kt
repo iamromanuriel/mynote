@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
-import com.roman.mynote.ui.auth.AuthDialog
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
 import com.roman.mynote.ui.note_audio.RecordAudioDialog
 import com.roman.mynote.utils.adapter.NoteAdapter
@@ -27,6 +26,7 @@ import com.roman.mynote.utils.adapter.SwipeToLeftCallback
 import com.roman.mynote.utils.notification.NotificationHelper
 import com.roman.mynote.utils.notification.NotificationModel
 import com.roman.mynote.utils.notification.TypeNotification
+import com.roman.mynote.utils.setupExpandableBehavior
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
 import com.romanuriel.core.Task
@@ -45,10 +45,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val popupMenu = PopupMenu(requireContext(),binding.extendedActionAddNewNote)
-        popupMenu.inflate(R.menu.menu_new_note)
 
-        binding.extendedActionAddNewNote.setOnClickListener { popupMenu.show() }
+        binding.animEmpty.playAnimation()
         //Add Listener MotionLayout
         adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
@@ -62,6 +60,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         binding.apply {
             setRecyclerView()
             onRefresh()
+            buttonNew()
         }
         //binding.extendedActionAddNewNote.setOnClickListener(this)
         binding.ivUserProfileImage.setOnClickListener(this)
@@ -83,7 +82,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.notes.collect{uiState ->
                     when(uiState){
-                        is NoteHomeUiState.Loading ->{  }
+
+                        is NoteHomeUiState.Loading ->{
+                            Log.d("TAG-RESULT-NOTE",uiState.toString())
+                        }
                         is NoteHomeUiState.Success ->{
                             Log.d("TAG-RESULT-NOTE",uiState.list.toString())
                             adapterNote.setData(uiState.list)
@@ -92,7 +94,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                             })
                             itemTouchHelper.attachToRecyclerView(binding.recyclerView)
                         }
-                        else -> {}
+                        is NoteHomeUiState.Error -> {
+
+                        }
+                        else -> { Log.d("TAG-RESULT-NOTE",uiState.toString()) }
                     }
                 }
             }
@@ -147,20 +152,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = adapterNote
     }
-
+    private fun FragmentHomeBinding.buttonNew() = this.apply {
+        val listOptions = listOf<View>(binding.noteButtonFloating,binding.audioButtonFloating,binding.reminderButtonFloating)
+        //binding.mainButtonFloating.setupExpandableBehavior(listOptions)
+        binding.mainButtonFloating.setOnClickListener {
+            val action = NewNoteBottomSheet()
+            activity.let { action.show(it!!.supportFragmentManager, action.tag) }
+        }
+    }
 
 
 
     override fun onClick(view: View) {
         when (view.id) {
-            binding.extendedActionAddNewNote.id ->{
-
-                val button = binding.extendedActionAddNewNote
-                //val audio = RecordAudioDialog()
-
-                //activity?.let { audio.show(it.supportFragmentManager, audio.tag) }
-
-            }
 
             binding.ivUserProfileImage.id ->{
                 val action = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingFragment())

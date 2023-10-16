@@ -27,8 +27,6 @@ class NoteAdapter(
         fun build(noteItems: NoteItem) {
             binding.textViewTitle.text = noteItems.title
             binding.textNotes.text  = noteItems.content
-            if(noteItems.pin) binding.imagePind.visibility = View.VISIBLE
-            else binding.imagePind.visibility = View.GONE
 
             binding.notesContainer.setOnClickListener { onClickRoot(noteItems) }
 

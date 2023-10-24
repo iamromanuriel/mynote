@@ -6,7 +6,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="?attr/colorSurface">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/anim_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"
+            tools:visibility="visible"
+            android:layout_gravity="center"
+            app:lottie_rawRes="@raw/shake_a_empty_box"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"/>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -14,22 +44,13 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/anim_empty"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:lottie_rawRes="@raw/shake_a_empty_box"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:scaleType="center"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:layoutAnimation="@anim/layout_animation"
             android:paddingBottom="100dp"
             tools:listitem="@layout/note_card" />
 
@@ -37,59 +58,9 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:layout_anchorGravity="bottom|end">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/main_button_floating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:src="@drawable/ic_add"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/note_button_floating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@+id/main_button_floating"
-            app:layout_constraintEnd_toEndOf="@+id/main_button_floating"
-            app:layout_constraintStart_toStartOf="@+id/main_button_floating"
-            android:src="@drawable/ic_note_add"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/audio_button_floating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/note_button_floating"
-            app:layout_constraintBottom_toTopOf="@+id/note_button_floating"
-            app:layout_constraintEnd_toEndOf="@+id/note_button_floating"
-            android:src="@drawable/ic_audio"/>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/reminder_button_floating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="invisible"
-            tools:visibility="visible"
-            app:layout_constraintStart_toStartOf="@+id/audio_button_floating"
-            app:layout_constraintBottom_toTopOf="@+id/audio_button_floating"
-            app:layout_constraintEnd_toEndOf="@+id/audio_button_floating"
-            android:src="@drawable/ic_note_add"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        android:id="@+id/layout_floating_option"
+        layout="@layout/layout_button_floatting_option"/>
 
 
     <com.google.android.material.appbar.AppBarLayout

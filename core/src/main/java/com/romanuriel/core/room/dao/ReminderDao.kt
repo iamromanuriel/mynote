@@ -14,7 +14,7 @@ interface ReminderDao {
     @Query("SELECT * FROM REMINDERS WHERE id=:id")
     fun getById(id: Long): Flow<Reminder>
     @Insert(onConflict = REPLACE)
-    fun insert(reminder: Reminder)
+    fun insert(reminder: Reminder): Long
 
     @Update
     fun update(reminder: Reminder)

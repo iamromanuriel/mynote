@@ -1,6 +1,7 @@
 package com.roman.mynote.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
 import com.roman.mynote.R
 import com.roman.mynote.utils.resource.IResourceProvider
 import java.text.SimpleDateFormat
@@ -8,9 +9,9 @@ import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-class TimeManager @Inject constructor(
-    private val resource: IResourceProvider
+
+class TimeManager constructor(
+    private val resource: Context
 ) {
     @SuppressLint("SimpleDateFormat")
     fun getTimeAgo(date: Date): String{
@@ -21,19 +22,19 @@ class TimeManager @Inject constructor(
         return when{
             timeDifference < 6000 ->{
                 val seconds = timeDifference / 1000
-                resource.getStringResource(R.string.time_ago)+" "+seconds+" "+if(seconds == 1L) "" else resource.getStringResource(R.string.time_secouds)
+                resource.resources.getString(R.string.time_ago)+" "+seconds+" "+if(seconds == 1L) "" else resource.resources.getString(R.string.time_secouds)
             }
             timeDifference < 3600000 -> {
                 val minutes = timeDifference / 60000
-                resource.getStringResource(R.string.time_ago)+" "+ minutes +" "+if(minutes == 1L) "" else resource.getStringResource(R.string.time_minute)
+                resource.resources.getString(R.string.time_ago)+" "+ minutes +" "+if(minutes == 1L) "" else resource.resources.getString(R.string.time_minute)
 
             }
             isYesterday(date)->{
-                resource.getStringResource(R.string.time_yesterday)
+                resource.resources.getString(R.string.time_yesterday)
             }
             timeDifference < 86400000 -> {
                 val hours = timeDifference / 3600000
-                resource.getStringResource(R.string.time_ago) +" "+ hours +" "+ if(hours == 1L) "" else resource.getStringResource(R.string.time_hour)
+                resource.resources.getString(R.string.time_ago) +" "+ hours +" "+ if(hours == 1L) "" else resource.resources.getString(R.string.time_hour)
             }
             timeDifference < 2628000000L -> {
                 SimpleDateFormat("d MMM").format(date)

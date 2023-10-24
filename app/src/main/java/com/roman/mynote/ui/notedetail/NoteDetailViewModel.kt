@@ -20,6 +20,7 @@ class NoteDetailViewModel @Inject constructor(
     private val deleteNoteUseCase: DeleteNoteUseCase,
     private val noteDetailUseCase: NoteDetailUseCase
 ): ViewModel() {
+    private var arg = 0L
     private val _task = MutableLiveData<Task<Unit>>()
     val task : LiveData<Task<Unit>>
         get() = _task
@@ -33,9 +34,16 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
+    fun setArg(arg: Long){
+        this.arg = arg
+    }
+
+
+
     fun onDeleteById(id: Long){
         viewModelScope.launch {
             _task.postValue(deleteNoteUseCase.invoke(id))
+
         }
     }
 

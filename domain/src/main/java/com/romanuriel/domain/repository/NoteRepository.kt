@@ -2,6 +2,7 @@ package com.romanuriel.domain.repository
 
 import com.romanuriel.core.room.AppDatabase
 import com.romanuriel.core.room.entity.Note
+import com.romanuriel.core.room.entity.Reminder
 import com.romanuriel.core.room.model.NoteDetail
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.core.room.model.NoteItemResult
@@ -33,6 +34,10 @@ class NoteRepository @Inject constructor(
     }
     fun getNoteDetailById(id: Long): Flow<NoteDetail>{
         return db.noteItemDao().getNoteDetailById(id)
+    }
+
+    fun insertReminder(reminder: Reminder): Long {
+        return db.reminderDao().insert(reminder)
     }
 
 }

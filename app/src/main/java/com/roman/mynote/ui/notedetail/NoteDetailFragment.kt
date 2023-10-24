@@ -7,6 +7,7 @@ import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.github.mikephil.charting.charts.PieChart
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
@@ -23,6 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class NoteDetailFragment : Fragment(R.layout.fragment_detail_note) {
     private val viewModel : NoteDetailViewModel by viewModels()
     private val binding: FragmentDetailNoteBinding by viewBinding()
+    private val arg : NoteDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

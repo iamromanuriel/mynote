@@ -18,20 +18,24 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
+import com.roman.mynote.databinding.FragmentNewReminderBinding
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
 import com.roman.mynote.ui.note_audio.RecordAudioDialog
+import com.roman.mynote.ui.reminder.ReminderDialog
+import com.roman.mynote.utils.DataOption
 import com.roman.mynote.utils.adapter.NoteAdapter
 import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
-import com.roman.mynote.utils.adapter.SwipeToLeftCallback
 import com.roman.mynote.utils.notification.NotificationHelper
 import com.roman.mynote.utils.notification.NotificationModel
 import com.roman.mynote.utils.notification.TypeNotification
+import com.roman.mynote.utils.set
 import com.roman.mynote.utils.setupExpandableBehavior
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
 import com.romanuriel.core.Task
 import com.romanuriel.utils.ResultSearchNoteData
 import com.romanuriel.utils.showSnackBar
+import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -47,7 +51,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         binding.animEmpty.playAnimation()
-        //Add Listener MotionLayout
         adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
         }
@@ -61,19 +64,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             setRecyclerView()
             onRefresh()
             buttonNew()
+            manageOptionCreateNote()
         }
         //binding.extendedActionAddNewNote.setOnClickListener(this)
         binding.ivUserProfileImage.setOnClickListener(this)
         binding.ibNotice.setOnClickListener(this)
         observeDataList()
+        binding.swipeRefresh.setOnRefreshListener { viewModel.onListNote() }
 
-        adapterResult.setData(listOf<ResultSearchNoteData>(
+        adapterResult.setData(listOf(
             ResultSearchNoteData(1,"Nota 1"),
             ResultSearchNoteData(2, "Nota 2"),
             ResultSearchNoteData(3, "Nota 3")
         ))
-        //binding.includeResult.recyclerViewSearch.layoutManager = LinearLayoutManager(requireContext())
-
         observerDataResult()
     }
 
@@ -81,22 +84,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.notes.collect{uiState ->
+                    binding.progressBar.visibility = View.GONE
+                    if(uiState == NoteHomeUiState.Empty) binding.animEmpty.visibility = View.VISIBLE
+                    else binding.animEmpty.visibility = View.GONE
+
                     when(uiState){
 
                         is NoteHomeUiState.Loading ->{
-                            Log.d("TAG-RESULT-NOTE",uiState.toString())
                         }
                         is NoteHomeUiState.Success ->{
-                            Log.d("TAG-RESULT-NOTE",uiState.list.toString())
                             adapterNote.setData(uiState.list)
-                            val itemTouchHelper = ItemTouchHelper(SwipeToLeftCallback(adapterNote){
-
-                            })
-                            itemTouchHelper.attachToRecyclerView(binding.recyclerView)
-                        }
-                        is NoteHomeUiState.Error -> {
 
                         }
+                        is NoteHomeUiState.Error -> { toast(uiState.msg) }
                         else -> { Log.d("TAG-RESULT-NOTE",uiState.toString()) }
                     }
                 }
@@ -133,15 +133,10 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         }
     }
 
-    private fun observeDataResultTask(){
-        viewModel.taskFirebase.observe(this.viewLifecycleOwner){result ->
-            when(result){
-                is Task.Success ->{ }
-                is Task.Error ->{
-                    binding.root.showSnackBar(result.exception.localizedMessage?:"",24)
-                }
-            }
-        }
+    private fun FragmentHomeBinding.manageOptionCreateNote() = this.layoutFloatingOption.apply {
+         set(DataOption(actionNote = { dialog ->  activity.let { dialog.show(it!!.supportFragmentManager, dialog.tag) }},
+             actionAudio = { dialog -> activity.let { dialog.show(it!!.supportFragmentManager,dialog.tag) } },
+             actionReminder = { dialog -> activity.let { dialog.show(it!!.supportFragmentManager,dialog.tag) } }))
     }
 
     private fun FragmentHomeBinding.onRefresh() = this.apply {
@@ -153,12 +148,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         adapter = adapterNote
     }
     private fun FragmentHomeBinding.buttonNew() = this.apply {
-        val listOptions = listOf<View>(binding.noteButtonFloating,binding.audioButtonFloating,binding.reminderButtonFloating)
-        //binding.mainButtonFloating.setupExpandableBehavior(listOptions)
-        binding.mainButtonFloating.setOnClickListener {
-            val action = NewNoteBottomSheet()
-            activity.let { action.show(it!!.supportFragmentManager, action.tag) }
-        }
+
     }
 
 

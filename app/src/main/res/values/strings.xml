@@ -45,4 +45,8 @@
     <string name="notifications">Notificaciones</string>
     <string name="account">Cuenta</string>
     <string name="text_example_name_audio">Audio871295</string>
+    <string name="text_title">Titulo</string>
+    <string name="note">Nota</string>
+    <string name="audio">Audio</string>
+    <string name="reminder">Recordatorio</string>
 </resources>

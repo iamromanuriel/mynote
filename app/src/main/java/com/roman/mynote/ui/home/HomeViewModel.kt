@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
     private val toListAllNoteUseCase: ToListAllNoteUseCase,
     private val insertNoteFirebase: InsertNoteFirebase
 ): ViewModel() {
-    private val listResult = listOf<ResultSearchNoteData>(
+    private val listResult = listOf(
         ResultSearchNoteData(1,"Nota 1"),
         ResultSearchNoteData(2, "Nota 2"),
         ResultSearchNoteData(3, "Nota 3")

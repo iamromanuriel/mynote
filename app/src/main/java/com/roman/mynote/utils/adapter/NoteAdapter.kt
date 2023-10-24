@@ -1,6 +1,7 @@
 package com.roman.mynote.utils.adapter
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.roman.mynote.R
 import com.roman.mynote.databinding.NoteCardBinding
+import com.roman.mynote.utils.TimeManager
 import com.romanuriel.core.room.model.NoteItem
 import java.lang.IndexOutOfBoundsException
+import java.util.Date
 
 class NoteAdapter(
     private val onClickRoot: (NoteItem) -> Unit,
@@ -29,8 +32,13 @@ class NoteAdapter(
             binding.textNotes.text  = noteItems.content
 
             binding.notesContainer.setOnClickListener { onClickRoot(noteItems) }
+            val date = Date(noteItems.dataCreate!!)
 
+            val time = TimeManager(binding.root.context).getTimeAgo(date)
+            Log.d("TAG-ITEM-TIME",time)
+            Log.d("TAG-ITEM-DATE",time)
 
+            binding.textDate.text = time
         }
     }
 

@@ -30,11 +30,14 @@ class AudioRecorderManager(private val application: Application) {
 
     fun setName(name: String) {this.fileName = name}
 
-    private fun isRecordingPermissionGranted(): Boolean {
+
+
+    fun isRecordingPermissionGranted(): Boolean {
         return ActivityCompat.checkSelfPermission(
             application,
             Manifest.permission.RECORD_AUDIO
         ) == PackageManager.PERMISSION_GRANTED
     }
+
 
 }

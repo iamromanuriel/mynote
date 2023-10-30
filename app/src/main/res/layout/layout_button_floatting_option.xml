@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/ic_add"/>
+        android:src="@drawable/ic_add"
+        app:tint="@color/md_theme_light_onPrimaryContainer"/>
 
     <TextView
         android:id="@+id/button_text_indicator_main"
@@ -23,6 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/add_note"
         android:layout_margin="@dimen/margin_small"
+        android:textStyle="bold"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintTop_toTopOf="@+id/main_button_floating"
@@ -39,7 +41,8 @@
         app:layout_constraintBottom_toTopOf="@+id/main_button_floating"
         app:layout_constraintEnd_toEndOf="@+id/main_button_floating"
         app:layout_constraintStart_toStartOf="@+id/main_button_floating"
-        android:src="@drawable/ic_note_add"/>
+        android:src="@drawable/ic_note_add"
+        app:tint="@color/md_theme_light_onPrimaryContainer"/>
 
     <TextView
         android:id="@+id/button_text_indicator_note"
@@ -47,6 +50,7 @@
         android:layout_height="wrap_content"
         android:text="@string/note"
         android:layout_margin="@dimen/margin_small"
+        android:textStyle="bold"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintTop_toTopOf="@+id/note_button_floating"
@@ -63,7 +67,8 @@
         app:layout_constraintStart_toStartOf="@+id/note_button_floating"
         app:layout_constraintBottom_toTopOf="@+id/note_button_floating"
         app:layout_constraintEnd_toEndOf="@+id/note_button_floating"
-        android:src="@drawable/ic_audio"/>
+        android:src="@drawable/ic_audio"
+        app:tint="@color/md_theme_light_onPrimaryContainer"/>
 
     <TextView
         android:id="@+id/button_text_indicator_audio"
@@ -71,6 +76,7 @@
         android:layout_height="wrap_content"
         android:text="@string/audio"
         android:layout_margin="@dimen/margin_small"
+        android:textStyle="bold"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/audio_button_floating"
@@ -87,7 +93,8 @@
         app:layout_constraintStart_toStartOf="@+id/audio_button_floating"
         app:layout_constraintBottom_toTopOf="@+id/audio_button_floating"
         app:layout_constraintEnd_toEndOf="@+id/audio_button_floating"
-        android:src="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"/>
+        android:src="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"
+        app:tint="@color/md_theme_light_onPrimaryContainer"/>
 
     <TextView
         android:id="@+id/button_text_indicator_reminder"
@@ -95,6 +102,7 @@
         android:layout_height="wrap_content"
         android:text="@string/reminder"
         android:layout_margin="@dimen/margin_small"
+        android:textStyle="bold"
         android:visibility="gone"
         tools:visibility="visible"
         app:layout_constraintTop_toTopOf="@+id/reminder_button_floating"

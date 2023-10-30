@@ -16,6 +16,8 @@ data class ToolbarModel(
     @DrawableRes
     val icon: Int = com.romanuriel.utils.R.drawable.ic_arrow_back,
     val action:() -> Unit,
+    val textButtonEnd: String? = null,
+    val buttonEnd: () -> Unit = {},
     @DrawableRes
     val endIcon: Int? = null,
     val endAction: () -> Unit = {},
@@ -29,10 +31,21 @@ data class ToolbarModel(
 fun BarActionLayoutBinding.set(toolbarModel: ToolbarModel) = this.apply {
     if(toolbarModel.titleString != null) textViewTitle.text = toolbarModel.titleString
     else textViewTitle.text = root.context.getText(toolbarModel.title)
+
     materialButtonClose.apply {
         setIconResource(toolbarModel.icon)
         setOnClickListener { toolbarModel.action() }
     }
+    toolbarModel.textButtonEnd.let {
+        buttonEndBasic.apply {
+            visibility = View.VISIBLE
+            text = it
+            setOnClickListener { toolbarModel.buttonEnd() }
+        }
+
+    }
+
+
     return@apply
     toolbarModel.endIcon?.let {
         materialButtonEnd.apply {

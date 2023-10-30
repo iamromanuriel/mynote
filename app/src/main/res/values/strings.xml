@@ -31,6 +31,7 @@
     <string name="password_repeat">Repetir contraseña</string>
     <string name="sign_in">Inicio de sesión</string>
     <string name="sign_up">Registrarse</string>
+    <string name="save">Guardar</string>
     <string name="example_result">list mark</string>
     <string name="example_title_notice">Mañana tienes reunion a las 4</string>
     <string name="example_description_notice">El dia 16 de Septiembre hay una reunion a las 6:00 PM.</string>

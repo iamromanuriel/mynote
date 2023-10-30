@@ -24,7 +24,8 @@ class NewNoteViewModel @Inject constructor(private val insertNewNoteUseCase: Ins
         ioThread.launch(CoroutineExceptionHandler { _, throwable ->
             _task.postValue(Task.Error(Exception(throwable.localizedMessage)))
         }) {
-            val result = insertNewNoteUseCase.invoke(title, note, TypeCategory.NOTE)
+            val result =
+                insertNewNoteUseCase.invoke(title = title, content = note, type = TypeCategory.NOTE)
             _task.postValue(result)
         }
     }

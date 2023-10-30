@@ -1,22 +1,21 @@
 package com.roman.mynote.utils
 
 import android.view.View
-import com.roman.mynote.databinding.LayoutButtomSheetDialogOptionBinding
 import com.roman.mynote.databinding.LayoutButtonFloattingOptionBinding
 import com.roman.mynote.ui.newnote.NewNoteBottomSheet
 import com.roman.mynote.ui.note_audio.RecordAudioDialog
-import com.roman.mynote.ui.reminder.ReminderDialog
-import com.romanuriel.core.room.model.NoteDetail
+import com.roman.mynote.ui.reminder.ReminderFragment
 
 data class DataOption(
     val actionNote: (noteDialog: NewNoteBottomSheet) -> Unit,
     val actionAudio:(audioDialog: RecordAudioDialog) -> Unit,
-    val actionReminder: (reminderDialog: ReminderDialog) -> Unit
+    val actionReminder: (reminderFragment: ReminderFragment) -> Unit
 )
 
 fun LayoutButtonFloattingOptionBinding.set(data: DataOption) = this.apply {
     var state = false
     mainButtonFloating.setOnClickListener {
+        state = !state
         if(state){
             buttonTextIndicatorMain.visibility = View.VISIBLE
             buttonTextIndicatorNote.visibility = View.VISIBLE
@@ -27,9 +26,12 @@ fun LayoutButtonFloattingOptionBinding.set(data: DataOption) = this.apply {
             audioButtonFloating.visibility = View.VISIBLE
             reminderButtonFloating.visibility = View.VISIBLE
 
-            noteButtonFloating.setOnClickListener { data.actionNote(NewNoteBottomSheet()) }
-            audioButtonFloating.setOnClickListener { data.actionAudio(RecordAudioDialog()) }
-            reminderButtonFloating.setOnClickListener { data.actionReminder(ReminderDialog()) }
+            noteButtonFloating.setOnClickListener { state = !state
+                data.actionNote(NewNoteBottomSheet()) }
+            audioButtonFloating.setOnClickListener { state = !state
+                data.actionAudio(RecordAudioDialog()) }
+            reminderButtonFloating.setOnClickListener { state = !state
+                data.actionReminder(ReminderFragment()) }
         }else{
             buttonTextIndicatorMain.visibility = View.GONE
             buttonTextIndicatorNote.visibility = View.GONE
@@ -40,6 +42,5 @@ fun LayoutButtonFloattingOptionBinding.set(data: DataOption) = this.apply {
             audioButtonFloating.visibility = View.GONE
             reminderButtonFloating.visibility = View.GONE
         }
-        state = !state
     }
 }

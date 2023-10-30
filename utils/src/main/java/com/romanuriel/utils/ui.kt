@@ -1,3 +1,5 @@
+@file:Suppress("DUPLICATE_LABEL_IN_WHEN")
+
 package com.romanuriel.utils
 
 import android.content.Context
@@ -6,9 +8,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
+import androidx.annotation.IntegerRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.color.MaterialColors
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.dialog.MaterialDialogs
 import com.google.android.material.snackbar.Snackbar
 
 enum class ToastLength(val length: Int) {
@@ -16,8 +22,18 @@ enum class ToastLength(val length: Int) {
     LONG(Toast.LENGTH_LONG)
 }
 
-fun Fragment.toast(message: String, length: ToastLength = ToastLength.SHORT) =
-    Toast.makeText(requireContext(), message, length.length).show()
+fun Fragment.toast(message: Any, length: ToastLength = ToastLength.SHORT) {
+
+    when(message){
+        is String ->{  }
+        is Int ->{ message.toString() }
+        is @receiver:StringRes Int -> { message.toString() }
+    }
+
+    Toast.makeText(requireContext(), message.toString(), length.length).show()
+}
+
+
 
 @ColorInt
 fun Context.getColorFromAttr(
@@ -58,4 +74,21 @@ fun View.showSnackBar(
         }
     }
 }.show()
+
+fun Fragment.dialog(@StringRes resTitle: Int, message: String, cancel: () -> Unit, ok: () -> Unit) = this.apply {
+    MaterialAlertDialogBuilder(requireContext())
+        .setTitle(resources.getString(resTitle))
+        .setMessage(message)
+        .setNegativeButton(resources.getString(android.R.string.cancel)){dialog, which ->
+            cancel()
+            dialog.dismiss()
+        }
+        .setPositiveButton(resources.getString(android.R.string.ok)){dialog, which ->
+            ok()
+            dialog.dismiss()
+        }
+        .show()
+
+
+}
 

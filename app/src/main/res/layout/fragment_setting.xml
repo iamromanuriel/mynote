@@ -34,7 +34,7 @@
                     android:id="@+id/setting_recyclerview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/layout_item_setting"
+                    tools:listitem="@layout/layout_item_option"
                     android:overScrollMode="never"/>
 
             </LinearLayout>

@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="?attr/backgroundTint"
     android:padding="@dimen/padding_small">
 
     <ImageView
@@ -15,7 +16,9 @@
         android:layout_margin="@dimen/margin_medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+
+        app:tint="?attr/colorPrimary" />
 
     <TextView
         android:id="@+id/text_title"
@@ -25,6 +28,8 @@
         android:textSize="@dimen/size_title"
         android:textStyle="bold"
         tools:ignore="SpUsage"
+        android:textColor="?attr/colorPrimary"
+        android:layout_marginHorizontal="@dimen/margin_medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_reference"/>
 
@@ -34,7 +39,10 @@
         android:layout_height="wrap_content"
         android:text="@string/description_notification"
         app:layout_constraintStart_toEndOf="@+id/image_reference"
-        app:layout_constraintTop_toBottomOf="@+id/text_title"/>
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        app:layout_constraintEnd_toStartOf="@id/image_arrow_start"
+        android:layout_marginHorizontal="@dimen/margin_medium"
+        android:visibility="visible"/>
 
     <ImageView
         android:id="@+id/image_arrow_start"
@@ -44,6 +52,7 @@
         android:layout_margin="@dimen/margin_medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="?attr/colorPrimary" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

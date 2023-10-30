@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintSet.Motion
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.gson.Gson
 import com.roman.mynote.R
 import com.roman.mynote.databinding.NoteCardBinding
 import com.roman.mynote.utils.TimeManager
@@ -28,6 +29,7 @@ class NoteAdapter(
 
     inner class NoteViewHolder(val binding: NoteCardBinding) : ViewHolder(binding.root) {
         fun build(noteItems: NoteItem) {
+            Gson().toJson(noteItems)
             binding.textViewTitle.text = noteItems.title
             binding.textNotes.text  = noteItems.content
 
@@ -35,8 +37,6 @@ class NoteAdapter(
             val date = Date(noteItems.dataCreate!!)
 
             val time = TimeManager(binding.root.context).getTimeAgo(date)
-            Log.d("TAG-ITEM-TIME",time)
-            Log.d("TAG-ITEM-DATE",time)
 
             binding.textDate.text = time
         }

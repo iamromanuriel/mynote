@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
+import com.roman.mynote.ui.option_note.BottomSheetActionNote
 import com.roman.mynote.utils.DataOption
 import com.roman.mynote.utils.adapter.NoteAdapter
 import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
@@ -40,8 +41,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
         }
-        ) { id, pin ->
-            viewModel.onPin(id, pin)
+        ) {
+            val dialog = BottomSheetActionNote()
+            activity.let { dialog.show(it!!.supportFragmentManager, dialog.tag) }
         }
 
         adapterResult = NoteResultSearchAdapter {  }
@@ -113,7 +115,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
     }
 
     private fun FragmentHomeBinding.manageOptionCreateNote() = this.layoutFloatingOption.apply {
-         set(DataOption(actionNote = { dialog ->  activity.let { dialog.show(it!!.supportFragmentManager, dialog.tag) }},
+         set(DataOption(actionNote = { dialog ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewNoteFragment())},
              actionAudio = { dialog -> activity.let { dialog.show(it!!.supportFragmentManager,dialog.tag) } },
              actionReminder = { dialog ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReminderFragment()) }))
     }

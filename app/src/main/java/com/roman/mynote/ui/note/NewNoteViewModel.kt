@@ -1,4 +1,4 @@
-package com.roman.mynote.ui.newnote
+package com.roman.mynote.ui.note
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

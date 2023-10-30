@@ -2,7 +2,7 @@ package com.roman.mynote.utils
 
 import android.view.View
 import com.roman.mynote.databinding.LayoutButtonFloattingOptionBinding
-import com.roman.mynote.ui.newnote.NewNoteBottomSheet
+import com.roman.mynote.ui.note.NewNoteBottomSheet
 import com.roman.mynote.ui.note_audio.RecordAudioDialog
 import com.roman.mynote.ui.reminder.ReminderFragment
 

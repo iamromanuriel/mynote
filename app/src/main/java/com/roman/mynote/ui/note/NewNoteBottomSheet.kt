@@ -1,4 +1,4 @@
-package com.roman.mynote.ui.newnote
+package com.roman.mynote.ui.note
 
 import android.os.Bundle
 import android.view.View

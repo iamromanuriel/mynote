@@ -22,7 +22,7 @@ import java.util.Date
 
 class NoteAdapter(
     private val onClickRoot: (NoteItem) -> Unit,
-    private val onClickPin: (id: Long, pin: Boolean) -> Unit
+    private val onClickLog: () -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private var listNoteItem = mutableListOf<NoteItem>()
@@ -34,6 +34,9 @@ class NoteAdapter(
             binding.textNotes.text  = noteItems.content
 
             binding.notesContainer.setOnClickListener { onClickRoot(noteItems) }
+            binding.root.setOnLongClickListener {
+                onClickLog()
+                true}
             val date = Date(noteItems.dataCreate!!)
 
             val time = TimeManager(binding.root.context).getTimeAgo(date)

@@ -24,9 +24,9 @@ import java.util.Date
 data class Audio (
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    val categoryId: Long?,
-    val title: String,
-    val audioFilePath: String,
-    val dateCreate: Date,
-    val pin: Boolean
+    val categoryId: Long ?= 0,
+    val title: String ?= "",
+    val audioFilePath: String ?= "",
+    val dateCreate: Date ?= null,
+    val pin: Boolean = false
 )

@@ -18,8 +18,11 @@ interface NoteItemDao {
     fun searchItemByTitle(text: String): Flow<List<NoteItemResult>>
 
 
-    @Query("SELECT id, categoryId, title, dateCreate AS dataCreate, content, 0 AS pin FROM NOTE")
+    @Query("SELECT id, categoryId, title, dateCreate AS dataCreate, content, pin FROM NOTE " +
+            "UNION " +
+            "SELECT id, categoryId, title, dateCreate AS dateCreate,'', pin FROM REMINDERS")
     fun allNote(): Flow<List<NoteItem>>
+
 
     @Query("DELETE FROM NOTE WHERE id =:id")
     suspend fun deleteByIdAndCategory(id: Long): Int

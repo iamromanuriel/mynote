@@ -2,18 +2,12 @@ package com.roman.mynote.ui.main_activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.viewbinding.library.activity.viewBinding
 import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.roman.mynote.R
 import com.roman.mynote.databinding.ActivityMainBinding
-import com.roman.mynote.utils.TimeManager
-import com.romanuriel.utils.TypeCategory
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Date
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

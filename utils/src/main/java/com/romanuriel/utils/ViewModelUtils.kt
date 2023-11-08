@@ -1,9 +1,9 @@
 package com.romanuriel.utils
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 
-fun ViewModel.viewModelLaunch() {
 
+fun ViewModel.viewModelLaunch() {
 
 }

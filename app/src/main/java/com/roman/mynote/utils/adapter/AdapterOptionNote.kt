@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.roman.mynote.R
 import com.roman.mynote.databinding.LayoutItemOptionBinding
 import com.roman.mynote.utils.model.OptionNoteModel
@@ -13,12 +14,17 @@ class AdapterOptionNote(
     val actionClick: () -> Unit
 ): RecyclerView.Adapter<AdapterOptionNote.OptionNoteViewHolder>() {
 
+    init {
+        Log.d("INIT-OPTION-ADAPTER","")
+    }
+
+
     private var list = listOf(
         OptionNoteModel("Delete","",R.drawable.ic_delete, androidx.transition.R.color.error_color_material_light ),
         OptionNoteModel(title = "Pin", icon = R.drawable.ic_pin),
         OptionNoteModel(title = "Save", icon = R.drawable.ic_save),
         OptionNoteModel(title = "Action", icon = R.drawable.ic_audio))
-    inner class OptionNoteViewHolder(val binding: LayoutItemOptionBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class OptionNoteViewHolder(val binding: LayoutItemOptionBinding) : ViewHolder(binding.root){
         fun build(optionNoteModel: OptionNoteModel){
             //if(optionNoteModel.icon != null) binding.imageReference.setImageDrawable(binding.root.resources.getDrawable(optionNoteModel.icon))
 
@@ -27,7 +33,6 @@ class AdapterOptionNote(
 
             binding.root.setOnClickListener { actionClick() }
 
-            Log.d("TAG-DATA-OPTION","")
         }
     }
 
@@ -42,6 +47,7 @@ class AdapterOptionNote(
 
     override fun onBindViewHolder(holder: OptionNoteViewHolder, position: Int) {
         val item = list[position]
+
         holder.build(item)
     }
 

@@ -62,6 +62,19 @@
             app:layout_constraintTop_toBottomOf="@+id/text_view_title"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <ImageView
+            android:id="@+id/image_reference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="@dimen/margin_medium"
+            app:layout_constraintTop_toBottomOf="@id/text_view_title"
+            app:layout_constraintBottom_toTopOf="@+id/text_date"
+            android:src="@drawable/ic_audio"
+            tools:visibility="visible"
+            android:visibility="gone"
+            />
+
         <TextView
             android:id="@+id/text_date"
             android:text="@string/example_date"

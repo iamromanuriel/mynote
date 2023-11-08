@@ -50,4 +50,8 @@
     <string name="note">Nota</string>
     <string name="audio">Audio</string>
     <string name="reminder">Recordatorio</string>
+
+    <!--    TEXT DIALOG    -->
+    <string name="title_cancel_record">Se cancelara la grabacion</string>}
+    <string name="message_cancel_record">¿Esta seguro de cancelar grabacion?</string>
 </resources>

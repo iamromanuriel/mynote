@@ -1,5 +1,6 @@
 package com.roman.mynote.ui.note
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,10 +24,17 @@ class NewNoteViewModel @Inject constructor(private val insertNewNoteUseCase: Ins
     fun newNote(title: String, note: String) {
         ioThread.launch(CoroutineExceptionHandler { _, throwable ->
             _task.postValue(Task.Error(Exception(throwable.localizedMessage)))
+            Log.d("TAG-NEW-NOTE",throwable.localizedMessage?:"")
         }) {
-            val result =
-                insertNewNoteUseCase.invoke(title = title, content = note, type = TypeCategory.NOTE)
-            _task.postValue(result)
+            _task.postValue(Task.Loading)
+
+            _task.postValue(
+                insertNewNoteUseCase.invoke(
+                    title = title,
+                    content = note,
+                    type = TypeCategory.NOTE
+                )
+            )
         }
     }
 }

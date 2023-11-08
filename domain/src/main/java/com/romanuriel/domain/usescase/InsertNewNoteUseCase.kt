@@ -1,7 +1,7 @@
 package com.romanuriel.domain.usescase
 
-import android.util.Log
 import com.romanuriel.core.Task
+import com.romanuriel.core.room.entity.Audio
 import com.romanuriel.core.room.entity.Note
 import com.romanuriel.core.room.entity.Reminder
 import com.romanuriel.domain.repository.NoteRepository
@@ -11,18 +11,35 @@ import javax.inject.Inject
 
 class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepository) {
     operator fun invoke(
-        title: String,
+        title: String = "",
         dateCreate: Long = 0,
         content: String = "",
         type: TypeCategory
     ): Task<Unit> {
 
-        return when (type.id) {
-            1L -> {
-                Task.Error(Exception("Error"))
+        return when (type) {
+            TypeCategory.AUDIO -> {
+                val audio = Audio(
+                    categoryId = type.id,
+                    title = title,
+                    audioFilePath = content,
+                    dateCreate = Date()
+                )
+
+
+                val query = repository.insertAudio(audio)
+
+
+
+                if(query > 0){
+                    Task.Success(Unit)
+                }else{
+                    Task.Error(Exception("Error"))
+                }
+
             }
 
-            2L -> {
+            TypeCategory.REMINDER -> {
                 val reminder = Reminder(
                     categoryId = type.id,
                     title = title,
@@ -40,7 +57,7 @@ class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepos
                 }
             }
 
-            3L -> {
+            TypeCategory.NOTE -> {
 
                 val note = Note()
                 note.categoryId = type.id
@@ -48,7 +65,7 @@ class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepos
                 note.content = content
                 note.dateCreate = Date()
                 note.lastUpdate = Date()
-                Log.d("TAG-CATEGORY", note.toString())
+
                 val query = repository.insert(note)
                 if (query > 0) {
                     Task.Success(Unit)

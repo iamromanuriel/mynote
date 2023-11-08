@@ -1,6 +1,7 @@
 package com.roman.mynote.ui.option_note
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.viewbinding.library.dialogfragment.viewBinding
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,9 @@ class BottomSheetActionNote() : BaseBottomSheet(R.layout.fragment_dialog_info_no
     private lateinit var adapterOptionNote : AdapterOptionNote
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("INIT-OPTION-FRAGMENT","")
         adapterOptionNote = AdapterOptionNote {  }
+
         binding.apply {
             toList()
         }

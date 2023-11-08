@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/radius_car_dialog"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container_main"
@@ -112,57 +106,12 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_close"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    style="?attr/materialIconButtonFilledStyle"
-                    android:backgroundTint="?attr/colorSurface"
-                    app:icon="@drawable/ic_close"
-                    app:iconTint="?attr/colorPrimary"
-                    />
-
-                <TextView
-                    android:id="@+id/text_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Grabar nota"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:textColor="?attr/colorPrimary"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/button_close"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button_save"/>
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/button_save"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    style="?attr/materialIconButtonFilledStyle"
-                    android:backgroundTint="?attr/colorSurface"
-                    app:icon="@drawable/ic_save"
-                    app:iconTint="?attr/colorPrimary"
-                    android:visibility="gone"
-                    tools:visibility="visible"
-                    />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <include
+                android:id="@+id/layout_toolbar"
+                layout="@layout/bar_action_layout"/>
 
         </com.google.android.material.appbar.AppBarLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
-</com.google.android.material.card.MaterialCardView>

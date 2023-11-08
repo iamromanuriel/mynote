@@ -14,7 +14,7 @@ interface AudioDao {
     @Query("SELECT * FROM AUDIO_NOTE WHERE id =:id")
     fun getById(id: Long): Flow<Audio>
     @Insert(onConflict = REPLACE)
-    fun insert(audio: Audio)
+    fun insert(audio: Audio): Long
     @Update
     fun update(audio: Audio)
     @Delete

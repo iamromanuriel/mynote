@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_homeFragment_to_reminderFragment"
             app:destination="@id/reminderFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_recordAudioFragment"
+            app:destination="@id/recordAudioFragment" />
         />
     </fragment>
     <fragment
@@ -64,4 +67,9 @@
         android:name="com.roman.mynote.ui.reminder.ReminderFragment"
         android:label="ReminderFragment"
         tools:layout="@layout/fragment_new_reminder"/>
+    <fragment
+        android:id="@+id/recordAudioFragment"
+        android:name="com.roman.mynote.ui.note_audio.RecordAudioFragment"
+        android:label="RecordAudioFragment"
+        tools:layout="@layout/layout_audio_recording"/>
 </navigation>

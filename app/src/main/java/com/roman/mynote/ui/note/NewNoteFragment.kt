@@ -51,12 +51,14 @@ class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
     }
 
     private fun FragmentNewNoteBinding.observeTask() = this.apply {
-        viewModel.task.observe(viewLifecycleOwner){task ->
+        viewModel.task.observe(viewLifecycleOwner){ task ->
             when(task){
                 is Task.Error -> {
                     root.showSnackBar(task.exception.localizedMessage?:"", 12)
                 }
-                is Task.Success -> { findNavController()::navigateUp }
+                is Task.Success -> { findNavController().navigateUp() }
+
+                is Task.Loading -> { binding.loading.visibility = View.VISIBLE }
             }
         }
     }

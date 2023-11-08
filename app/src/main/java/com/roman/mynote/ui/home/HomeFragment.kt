@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.gson.Gson
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
 import com.roman.mynote.ui.option_note.BottomSheetActionNote
@@ -78,6 +79,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                         is NoteHomeUiState.Loading ->{
                         }
                         is NoteHomeUiState.Success ->{
+                            Log.d("TAG-NOTE-LIST", Gson().toJson(uiState.list))
                             adapterNote.setData(uiState.list)
 
                         }
@@ -116,7 +118,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
     private fun FragmentHomeBinding.manageOptionCreateNote() = this.layoutFloatingOption.apply {
          set(DataOption(actionNote = { dialog ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewNoteFragment())},
-             actionAudio = { dialog -> activity.let { dialog.show(it!!.supportFragmentManager,dialog.tag) } },
+             actionAudio = { dialog -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRecordAudioFragment()) },
              actionReminder = { dialog ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReminderFragment()) }))
     }
 

@@ -5,10 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.SpinnerAdapter
 import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.constraintlayout.widget.ConstraintSet.Motion
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -17,31 +14,46 @@ import com.roman.mynote.R
 import com.roman.mynote.databinding.NoteCardBinding
 import com.roman.mynote.utils.TimeManager
 import com.romanuriel.core.room.model.NoteItem
+import com.romanuriel.utils.TypeCategory
 import java.lang.IndexOutOfBoundsException
 import java.util.Date
 
 class NoteAdapter(
-    private val onClickRoot: (NoteItem) -> Unit,
-    private val onClickLog: () -> Unit
+    val onClickRoot: (NoteItem) -> Unit,
+    val onLogClick: () -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private var listNoteItem = mutableListOf<NoteItem>()
 
     inner class NoteViewHolder(val binding: NoteCardBinding) : ViewHolder(binding.root) {
         fun build(noteItems: NoteItem) {
-            Gson().toJson(noteItems)
+
             binding.textViewTitle.text = noteItems.title
-            binding.textNotes.text  = noteItems.content
-
-            binding.notesContainer.setOnClickListener { onClickRoot(noteItems) }
-            binding.root.setOnLongClickListener {
-                onClickLog()
-                true}
             val date = Date(noteItems.dataCreate!!)
-
             val time = TimeManager(binding.root.context).getTimeAgo(date)
-
             binding.textDate.text = time
+
+            when(noteItems.categoryId){
+                TypeCategory.NOTE.id -> {
+                    binding.textNotes.text  = noteItems.content
+                }
+                TypeCategory.REMINDER.id -> {
+                    binding.textNotes.visibility = View.GONE
+                    binding.imageReference.visibility = View.VISIBLE
+                }
+                TypeCategory.AUDIO.id -> {
+                    binding.textNotes.visibility = View.GONE
+                    binding.imageReference.visibility = View.VISIBLE
+                }
+            }
+
+            binding.notesContainer.setOnClickListener {
+                onClickRoot(noteItems)
+            }
+            binding.root.setOnLongClickListener {
+                onLogClick()
+                true
+            }
         }
     }
 

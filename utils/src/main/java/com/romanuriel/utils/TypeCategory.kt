@@ -1,8 +1,8 @@
 package com.romanuriel.utils
 
-enum class TypeCategory(val id: Long, val value: String) {
-    AUDIO(1,"Audio"),
-    REMINDER(2,"Recordatorio"),
-    NOTE(3,"Nota")
+enum class TypeCategory(val id: Long) {
+    AUDIO(2),
+    REMINDER(3),
+    NOTE(1)
 }
 

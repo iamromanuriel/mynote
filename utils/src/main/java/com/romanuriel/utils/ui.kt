@@ -77,6 +77,7 @@ fun View.showSnackBar(
 
 fun Fragment.dialog(@StringRes resTitle: Int, message: String, cancel: () -> Unit, ok: () -> Unit) = this.apply {
     MaterialAlertDialogBuilder(requireContext())
+        .setIcon(R.drawable.ic_warning)
         .setTitle(resources.getString(resTitle))
         .setMessage(message)
         .setNegativeButton(resources.getString(android.R.string.cancel)){dialog, which ->

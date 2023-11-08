@@ -1,6 +1,7 @@
 package com.romanuriel.domain.repository
 
 import com.romanuriel.core.room.AppDatabase
+import com.romanuriel.core.room.entity.Audio
 import com.romanuriel.core.room.entity.Note
 import com.romanuriel.core.room.entity.Reminder
 import com.romanuriel.core.room.model.NoteDetail
@@ -38,6 +39,10 @@ class NoteRepository @Inject constructor(
 
     fun insertReminder(reminder: Reminder): Long {
         return db.reminderDao().insert(reminder)
+    }
+
+    fun insertAudio(audio: Audio): Long{
+        return db.audioDao().insert(audio)
     }
 
 }

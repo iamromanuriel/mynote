@@ -5,8 +5,12 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 
 enum class PreferenceKey(val code: String) {
-    NEW_NOTIFICATION("NewNotification"),
+    ACTIVE_NOTIFICATION("NewNotification"),
     MODE_THEME("ModeTheme"),
+    LANGUAGE("Language"),
+    SAVE_DRAFT("Save_draft"),
+    USER_ID("user_id"),
+    FULL_NAME_USER("Full name user"),
     ORDER("Order")
 }
 class SharedPreference(

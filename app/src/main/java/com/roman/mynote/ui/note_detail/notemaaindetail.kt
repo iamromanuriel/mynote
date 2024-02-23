@@ -1,6 +1,5 @@
-package com.roman.mynote.ui.notedetail
+package com.roman.mynote.ui.note_detail
 
-import android.view.View
 import androidx.annotation.DrawableRes
 import com.roman.mynote.databinding.LayoutInfoNoteMainBinding
 

@@ -24,9 +24,7 @@ class AdapterSetting: RecyclerView.Adapter<AdapterSetting.SettingViewHolder>() {
         return list.size
     }
 
-    override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {
-
-    }
+    override fun onBindViewHolder(holder: SettingViewHolder, position: Int) {  }
 
     fun setData(toList: List<String>){
 

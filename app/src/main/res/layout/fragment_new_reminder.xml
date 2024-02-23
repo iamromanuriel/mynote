@@ -12,9 +12,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-
-
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/card_calendar_view"
             android:layout_width="wrap_content"
@@ -34,6 +31,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    tools:visibility="visible"
+                    android:visibility="gone"/>
+
                 <ImageButton
                     android:id="@+id/button_before"
                     android:layout_width="wrap_content"
@@ -45,62 +53,55 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:tint="?attr/colorPrimary"
                     tools:visibility="visible"
-                    android:visibility="gone"/>
+                    android:visibility="invisible"/>
 
                 <ImageButton
                     android:id="@+id/button_reddy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_done"
+                    android:src="@drawable/baseline_arrow_forward_24"
                     android:background="?attr/actionBarItemBackground"
                     android:layout_margin="@dimen/margin_small"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:tint="?attr/colorPrimary"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     tools:visibility="visible"/>
 
-                <ViewFlipper
-                    android:id="@+id/view_flipper"
+
+                <CalendarView
+                    android:id="@+id/calendar_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inAnimation="@android:anim/fade_in"
-                    android:outAnimation="@android:anim/fade_out"
-                    app:layout_constraintTop_toBottomOf="@+id/button_reddy"
+                    app:layout_constraintTop_toBottomOf="@id/button_before"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent">
-                    <CalendarView
-                        android:id="@+id/calendar_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                     />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/layout_input_title"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_margin="@dimen/margin_medium"
-                        android:visibility="gone"
-                        tools:visibility="visible">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/layout_input_title"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="@dimen/margin_medium"
+                    app:layout_constraintTop_toBottomOf="@id/button_before"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:visibility="invisible"
+                    tools:visibility="visible">
 
-
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/edit_text_title"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="top"
-                            android:hint="@string/text_title" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </ViewFlipper>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/edit_text_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="top"
+                        android:hint="@string/text_title" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.card.MaterialCardView>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

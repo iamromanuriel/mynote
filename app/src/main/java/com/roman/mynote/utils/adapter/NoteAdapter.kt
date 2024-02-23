@@ -9,7 +9,6 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.google.gson.Gson
 import com.roman.mynote.R
 import com.roman.mynote.databinding.NoteCardBinding
 import com.roman.mynote.utils.TimeManager
@@ -30,21 +29,22 @@ class NoteAdapter(
 
             binding.textViewTitle.text = noteItems.title
             val date = Date(noteItems.dataCreate!!)
-            val time = TimeManager(binding.root.context).getTimeAgo(date)
-            binding.textDate.text = time
+            Log.d("TAG-DATE-NOTE",date.toString())
+            binding.textDate.text = TimeManager(binding.root.context).getTimeAgo(date)
 
             when(noteItems.categoryId){
                 TypeCategory.NOTE.id -> {
                     binding.textNotes.text  = noteItems.content
+                    binding.textNotes.visibility = View.VISIBLE
                 }
                 TypeCategory.REMINDER.id -> {
                     binding.textNotes.visibility = View.GONE
-                    binding.imageReference.visibility = View.VISIBLE
                 }
                 TypeCategory.AUDIO.id -> {
                     binding.textNotes.visibility = View.GONE
-                    binding.imageReference.visibility = View.VISIBLE
+
                 }
+                else ->  {  }
             }
 
             binding.notesContainer.setOnClickListener {

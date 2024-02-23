@@ -1,4 +1,4 @@
-package com.roman.mynote.ui.notedetail
+package com.roman.mynote.ui.note_detail
 
 import android.graphics.Color
 import android.os.Bundle

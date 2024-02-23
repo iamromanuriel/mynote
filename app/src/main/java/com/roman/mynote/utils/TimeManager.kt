@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-class TimeManager constructor(
+class TimeManager (
     private val resource: Context
 ) {
     @SuppressLint("SimpleDateFormat")
@@ -22,7 +22,7 @@ class TimeManager constructor(
         return when{
             timeDifference < 6000 ->{
                 val seconds = timeDifference / 1000
-                resource.resources.getString(R.string.time_ago)+" "+seconds+" "+if(seconds == 1L) "" else resource.resources.getString(R.string.time_secouds)
+                resource.getString(R.string.time_ago_moment)
             }
             timeDifference < 3600000 -> {
                 val minutes = timeDifference / 60000

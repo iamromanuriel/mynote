@@ -12,11 +12,11 @@ import com.roman.mynote.databinding.BarActionLayoutBinding
 data class ToolbarModel(
     @StringRes
     val title: Int = R.string.app_name,
-    val titleString: String? = null,
+    val titleString: String = "",
     @DrawableRes
     val icon: Int = com.romanuriel.utils.R.drawable.ic_arrow_back,
     val action:() -> Unit,
-    val textButtonEnd: String? = null,
+    val textButtonEnd: String = "",
     val buttonEnd: () -> Unit = {},
     @DrawableRes
     val endIcon: Int? = null,
@@ -26,26 +26,23 @@ data class ToolbarModel(
     val switchAction: MaterialSwitch.() -> Unit = {},
     val switchOnClick:(Boolean) -> Unit = {}
 )
-
-
 fun BarActionLayoutBinding.set(toolbarModel: ToolbarModel) = this.apply {
-    if(toolbarModel.titleString != null) textViewTitle.text = toolbarModel.titleString
+    if(toolbarModel.titleString.isNotEmpty()) textViewTitle.text = toolbarModel.titleString
     else textViewTitle.text = root.context.getText(toolbarModel.title)
 
     materialButtonClose.apply {
         setIconResource(toolbarModel.icon)
         setOnClickListener { toolbarModel.action() }
     }
-    toolbarModel.textButtonEnd.let {
-        buttonEndBasic.apply {
-            visibility = View.VISIBLE
-            text = it
-            setOnClickListener { toolbarModel.buttonEnd() }
+    buttonEndBasic.apply {
+        visibility = if (toolbarModel.textButtonEnd.isNotEmpty()) {
+            text = toolbarModel.textButtonEnd
+            View.VISIBLE
+        } else {
+            View.GONE
         }
-
+        setOnClickListener { toolbarModel.buttonEnd() }
     }
-
-
     return@apply
     toolbarModel.endIcon?.let {
         materialButtonEnd.apply {

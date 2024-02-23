@@ -6,21 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.roman.mynote.R
 import com.roman.mynote.databinding.LayoutResultSearchNoteBinding
-import com.romanuriel.utils.ResultSearchNoteData
+import com.romanuriel.core.room.model.NoteItemResult
 
 
 class NoteResultSearchAdapter(
-    val onClick: (ResultSearchNoteData) -> Unit
+    val onClick: (NoteItemResult) -> Unit
 ) : RecyclerView.Adapter<NoteResultSearchAdapter.NoteResultSearchViewHolder>() {
-    private var listResult = mutableListOf<ResultSearchNoteData>()
+    private var listResult = mutableListOf<NoteItemResult>()
 
     inner class NoteResultSearchViewHolder(private val binding: LayoutResultSearchNoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun build(resultSearchNoteData: ResultSearchNoteData) {
+        fun build(resultSearchNoteData: NoteItemResult) {
             binding.apply {
                 textResult.text = resultSearchNoteData.content
-                imageClose.visibility = resultSearchNoteData.searched!!
-                imageClose.setOnClickListener {
+                binding.root.setOnClickListener {
                     onClick(resultSearchNoteData)
                 }
             }
@@ -49,7 +48,7 @@ class NoteResultSearchAdapter(
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    fun setData(list: List<ResultSearchNoteData>) {
+    fun setData(list: List<NoteItemResult>) {
         this.listResult = list.toMutableList()
         notifyDataSetChanged()
     }

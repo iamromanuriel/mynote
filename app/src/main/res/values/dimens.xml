@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="margin_medium">16dp</dimen>
-    <dimen name="radius_car_dialog">32dp</dimen>
-    <dimen name="padding_medium">12dp</dimen>
     <dimen name="margin_small">12dp</dimen>
-    <dimen name="card_md_3">3dp</dimen>
-    <dimen name="size_title">18dp</dimen>
+
+
+    <dimen name="padding_medium">12dp</dimen>
     <dimen name="padding_small">8dp</dimen>
+
+    <dimen name="card_md_3">3dp</dimen>
+    <dimen name="radius_car_dialog">32dp</dimen>
+
+    <dimen name="size_title">18dp</dimen>
     <dimen name="title_size_item">18sp</dimen>
+
 </resources>

@@ -1,12 +1,9 @@
-package com.roman.mynote.ui.notedetail
+package com.roman.mynote.ui.note_detail
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.roman.mynote.utils.component.ReminderModel
 import com.romanuriel.core.Task
 import com.romanuriel.domain.usescase.DeleteNoteUseCase
 import com.romanuriel.domain.usescase.NoteDetailUseCase
@@ -41,10 +38,7 @@ class NoteDetailViewModel @Inject constructor(
 
 
     fun onDeleteById(id: Long){
-        viewModelScope.launch {
-            _task.postValue(deleteNoteUseCase.invoke(id))
-
-        }
+        viewModelScope
     }
 
 }

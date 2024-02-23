@@ -26,19 +26,14 @@ class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepos
                     dateCreate = Date()
                 )
 
-
                 val query = repository.insertAudio(audio)
-
-
 
                 if(query > 0){
                     Task.Success(Unit)
                 }else{
-                    Task.Error(Exception("Error"))
+                    Task.Error(Exception("Error al guardar la nota"))
                 }
-
             }
-
             TypeCategory.REMINDER -> {
                 val reminder = Reminder(
                     categoryId = type.id,
@@ -58,7 +53,6 @@ class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepos
             }
 
             TypeCategory.NOTE -> {
-
                 val note = Note()
                 note.categoryId = type.id
                 note.title = title

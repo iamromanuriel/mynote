@@ -50,8 +50,10 @@
     <string name="note">Nota</string>
     <string name="audio">Audio</string>
     <string name="reminder">Recordatorio</string>
-
+    <string name="time_ago_moment">Hace un momento</string>
     <!--    TEXT DIALOG    -->
     <string name="title_cancel_record">Se cancelara la grabacion</string>}
     <string name="message_cancel_record">¿Esta seguro de cancelar grabacion?</string>
+
+    <string name="title_picker_time">Select time</string>
 </resources>

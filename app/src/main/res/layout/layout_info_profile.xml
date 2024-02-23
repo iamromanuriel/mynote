@@ -1,84 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.motion.widget.MotionLayout
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_medium"
+    android:clickable="true"
+    android:focusable="true"
     app:layoutDescription="@xml/layout_info_profile_scene">
 
-    <com.google.android.material.card.MaterialCardView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true"
-        style="@style/Widget.AppCompat.ListView"
-        android:id="@+id/card">
+        android:layout_height="wrap_content"
+        android:id="@+id/TODO">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+
+        <ImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_small"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/text_username"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/TODO">
-
-            <TextView
-                android:id="@+id/text_account"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/account"
-                android:layout_margin="@dimen/margin_small"
-                android:textSize="@dimen/title_size_item"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/image_avatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_margin="@dimen/margin_small"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_account"
-                app:layout_constraintBottom_toBottomOf="parent"
-                tools:src="@tools:sample/avatars" />
-
-            <TextView
-                android:id="@+id/text_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/text_edit_profile"
-                app:layout_constraintStart_toEndOf="@+id/image_avatar"
-                app:layout_constraintTop_toTopOf="@id/image_avatar"
-                android:layout_margin="@dimen/margin_medium"
-                tools:text="@string/user_name" />
-
-            <TextView
-                android:id="@+id/text_edit_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/setting"
-                android:layout_margin="@dimen/margin_medium"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/image_avatar"
-                app:layout_constraintTop_toBottomOf="@+id/text_username" />
-
-
-            <ImageButton
-                android:id="@+id/imgButtDes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/actionBarItemBackground"
-                android:src="@drawable/baseline_arrow_right"
-                android:layout_margin="@dimen/margin_small"
-                app:layout_constraintTop_toTopOf="@+id/text_username"
-                app:layout_constraintBottom_toBottomOf="@+id/text_edit_profile"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:contentDescription="@string/description_image" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/size_title"
+            android:textStyle="bold"
+            android:layout_margin="@dimen/margin_medium"
+            tools:text="@string/user_name" />
 
 
 
-</androidx.constraintlayout.motion.widget.MotionLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

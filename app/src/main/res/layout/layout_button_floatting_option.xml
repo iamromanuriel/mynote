@@ -1,112 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="bottom|end"
-    android:paddingEnd="@dimen/margin_small"
-    android:paddingBottom="@dimen/margin_small"
+    android:id="@+id/container_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     app:layout_anchorGravity="bottom|end"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/main_button_floating"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="RtlSymmetry">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/end_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/start_view"
+        android:layout_gravity="bottom|end"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_note"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_margin="@dimen/margin_medium"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_audio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_medium"
+            android:src="@drawable/ic_audio"
+            app:layout_constraintBottom_toTopOf="@+id/fab_note"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/fab_audio"
+            android:layout_margin="@dimen/margin_medium" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/start_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
-        app:tint="@color/md_theme_light_onPrimaryContainer"/>
+        android:layout_margin="@dimen/margin_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/md_theme_light_onPrimaryContainer"
+        android:layout_gravity="bottom|end"/>
 
-    <TextView
-        android:id="@+id/button_text_indicator_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/add_note"
-        android:layout_margin="@dimen/margin_small"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintTop_toTopOf="@+id/main_button_floating"
-        app:layout_constraintEnd_toStartOf="@+id/main_button_floating"
-        app:layout_constraintBottom_toBottomOf="@+id/main_button_floating"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/note_button_floating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/main_button_floating"
-        app:layout_constraintEnd_toEndOf="@+id/main_button_floating"
-        app:layout_constraintStart_toStartOf="@+id/main_button_floating"
-        android:src="@drawable/ic_note_add"
-        app:tint="@color/md_theme_light_onPrimaryContainer"/>
-
-    <TextView
-        android:id="@+id/button_text_indicator_note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/note"
-        android:layout_margin="@dimen/margin_small"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintTop_toTopOf="@+id/note_button_floating"
-        app:layout_constraintBottom_toBottomOf="@+id/note_button_floating"
-        app:layout_constraintEnd_toStartOf="@+id/note_button_floating"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/audio_button_floating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/note_button_floating"
-        app:layout_constraintBottom_toTopOf="@+id/note_button_floating"
-        app:layout_constraintEnd_toEndOf="@+id/note_button_floating"
-        android:src="@drawable/ic_audio"
-        app:tint="@color/md_theme_light_onPrimaryContainer"/>
-
-    <TextView
-        android:id="@+id/button_text_indicator_audio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/audio"
-        android:layout_margin="@dimen/margin_small"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/audio_button_floating"
-        app:layout_constraintTop_toTopOf="@+id/audio_button_floating"
-        app:layout_constraintBottom_toBottomOf="@id/audio_button_floating"/>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/reminder_button_floating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:visibility="invisible"
-        tools:visibility="visible"
-        app:layout_constraintStart_toStartOf="@+id/audio_button_floating"
-        app:layout_constraintBottom_toTopOf="@+id/audio_button_floating"
-        app:layout_constraintEnd_toEndOf="@+id/audio_button_floating"
-        android:src="@drawable/calendar_with_a_clock_time_tools_icon_icons_com_56831"
-        app:tint="@color/md_theme_light_onPrimaryContainer"/>
-
-    <TextView
-        android:id="@+id/button_text_indicator_reminder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/reminder"
-        android:layout_margin="@dimen/margin_small"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintTop_toTopOf="@+id/reminder_button_floating"
-        app:layout_constraintBottom_toBottomOf="@+id/reminder_button_floating"
-        app:layout_constraintEnd_toStartOf="@id/reminder_button_floating"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

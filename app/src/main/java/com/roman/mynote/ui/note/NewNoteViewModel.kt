@@ -24,7 +24,6 @@ class NewNoteViewModel @Inject constructor(private val insertNewNoteUseCase: Ins
     fun newNote(title: String, note: String) {
         ioThread.launch(CoroutineExceptionHandler { _, throwable ->
             _task.postValue(Task.Error(Exception(throwable.localizedMessage)))
-            Log.d("TAG-NEW-NOTE",throwable.localizedMessage?:"")
         }) {
             _task.postValue(Task.Loading)
 

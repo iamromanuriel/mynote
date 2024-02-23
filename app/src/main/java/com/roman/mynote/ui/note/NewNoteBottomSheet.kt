@@ -8,6 +8,7 @@ import com.roman.mynote.R
 import com.roman.mynote.databinding.BottomSheetDialogNewNoteBinding
 import com.romanuriel.core.Task
 import com.romanuriel.utils.BaseBottomSheet
+import com.romanuriel.utils.SnackBarLength
 import com.romanuriel.utils.isFieldEmpty
 import com.romanuriel.utils.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,7 +43,7 @@ class NewNoteBottomSheet : BaseBottomSheet(R.layout.bottom_sheet_dialog_new_note
         viewModel.task.observe(viewLifecycleOwner){task ->
             when(task){
                 is Task.Error ->{
-                    root.showSnackBar(task.exception.localizedMessage?:"", 12)
+                    root.showSnackBar(task.exception.localizedMessage?:"", SnackBarLength.MEDIUM)
                 }
                 is Task.Success ->{ dismiss() }
             }

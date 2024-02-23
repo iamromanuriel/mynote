@@ -1,12 +1,15 @@
 package com.roman.mynote.ui.reminder
 
+import android.os.Binder
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentNewReminderBinding
 import com.roman.mynote.ui.BaseFragment
@@ -14,8 +17,15 @@ import com.roman.mynote.utils.ToolbarModel
 import com.roman.mynote.utils.set
 import com.romanuriel.core.Task
 import com.romanuriel.utils.Axis
+import com.romanuriel.utils.SnackBarLength
+import com.romanuriel.utils.enums.StateNewReminder
+import com.romanuriel.utils.showDialog
 import com.romanuriel.utils.showSnackBar
+import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
+import java.util.Calendar
+import java.util.Date
 
 @AndroidEntryPoint
 class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
@@ -26,50 +36,29 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             setToolbar()
-            readyReminder()
         }
 
         viewModel.apply {
             observeTask()
+            observerReminderTask()
         }
     }
-
-    private fun FragmentNewReminderBinding.readyReminder() = this.apply {
-        var reddy = false
-
-        val parent = calendarView.parent as? ViewGroup
-        parent?.removeView(calendarView)
-
-        viewFlipper.addView(calendarView)
-        viewFlipper.flipInterval = 200
-        viewFlipper.isAutoStart = true
-
-        showComponent(reddy)
-        buttonReddy.setOnClickListener {
-            reddy = !reddy
-            viewFlipper.showNext()
-            showComponent(reddy)
-        }
-        buttonBefore.setOnClickListener {
-            reddy = !reddy
-            viewFlipper.showPrevious()
-            showComponent(reddy)
-        }
-
-
+    private fun dialogTimePicker(): MaterialTimePicker{
+        return MaterialTimePicker.Builder()
+            .setTimeFormat(TimeFormat.CLOCK_12H)
+            .setHour(12)
+            .setMinute(10)
+            .setTitleText(getString(R.string.title_picker_time))
+            .build()
     }
+
     private fun FragmentNewReminderBinding.setToolbar() = this.layoutToolbar.apply {
         set(
             ToolbarModel(
-                title = R.string.reminder,
+                titleString = getString(R.string.reminder),
                 action = findNavController()::navigateUp,
                 textButtonEnd = requireContext().getString(R.string.save),
-                buttonEnd = {
-                    val date = calendarView.date
-                    val title = editTextTitle.text.toString()
-                    if(title.isEmpty()) editTextTitle.error = requireContext().getString(R.string.requeride)
-                        else viewModel.onCreateReminder(date, title)
-                }
+                buttonEnd = { viewModel.onCreateReminder(binding.editTextTitle.text.toString()) }
             )
         )
     }
@@ -78,9 +67,8 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
         task.observe(viewLifecycleOwner) { mTask ->
             when (mTask) {
                 is Task.Success -> { findNavController().navigateUp() }
-
                 is Task.Error -> {
-                    binding.root.showSnackBar(mTask.exception.localizedMessage ?: "", 50)
+                    binding.root.showSnackBar(mTask.exception.localizedMessage ?: "", SnackBarLength.SHORT)
                 }
                 is Task.Loading ->{  }
                 else ->{}
@@ -88,24 +76,32 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
         }
     }
 
-    private fun showComponent(isReddy: Boolean){
-        binding.apply {
-            if(isReddy){
-                Log.d("REDDY",isReddy.toString())
-                //viewFlipper.setInAnimation(requireContext(), android.R.anim.slide_out_right)
-                calendarView.visibility = View.INVISIBLE
-                layoutInputTitle.visibility = View.VISIBLE
-                buttonReddy.visibility = View.INVISIBLE
-                buttonBefore.visibility = View.VISIBLE
-            }else{
-                Log.d("REDDY",isReddy.toString())
-                //viewFlipper.setInAnimation(requireContext(), android.R.anim.slide_in_left)
-                calendarView.visibility = View.VISIBLE
-                layoutInputTitle.visibility = View.INVISIBLE
-                buttonReddy.visibility = View.VISIBLE
-                buttonBefore.visibility = View.INVISIBLE
+    private fun ReminderViewModel.observerReminderTask() = this.apply {
+        stateProgress.observe(viewLifecycleOwner){ mReminder ->
+            when(mReminder){
+                StateNewReminder.EMPTY ->{
+                    binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
+                        viewModel.setDay(year, month, dayOfMonth)
+                    }
+                }
+                StateNewReminder.HAS_D ->{
+                    val timerDialog = dialogTimePicker()
+
+                    showDialog(timerDialog)
+                    timerDialog.addOnPositiveButtonClickListener {
+                        val hour = timerDialog.hour
+                        val minute = timerDialog.minute
+
+                        viewModel.setHora(hour, minute)
+                    }
+                }
+                StateNewReminder.HAS_H ->{
+                    binding.calendarView.visibility = View.INVISIBLE
+                    binding.layoutInputTitle.visibility = View.VISIBLE
+                    binding.editTextTitle.visibility = View.VISIBLE
+                }
+                StateNewReminder.HAS_T ->{  }
             }
         }
     }
-
 }

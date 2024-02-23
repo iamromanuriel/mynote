@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.gson.Gson
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
 import com.romanuriel.core.Task
@@ -24,27 +25,18 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val searchUseCase: SearchNoteUseCase,
-    private val toListAllNoteUseCase: ToListAllNoteUseCase,
-    private val insertNoteFirebase: InsertNoteFirebase
+    private val toListAllNoteUseCase: ToListAllNoteUseCase
 ): ViewModel() {
-    private val listResult = listOf(
-        ResultSearchNoteData(1,"Nota 1"),
-        ResultSearchNoteData(2, "Nota 2"),
-        ResultSearchNoteData(3, "Nota 3")
-    )
 
     private val _stateNote = MutableStateFlow<NoteHomeUiState>(NoteHomeUiState.Loading)
     val notes: StateFlow<NoteHomeUiState>
         get() = _stateNote
 
-    private val _stateNoteResult = MutableStateFlow<NoteHomeResultUiState>(NoteHomeResultUiState.Empty)
+    private val _stateNoteResult = MutableStateFlow<NoteHomeResultUiState>(NoteHomeResultUiState.Loading)
     val stateNoteResult : StateFlow<NoteHomeResultUiState>
         get() = _stateNoteResult
 
 
-    private val _taskFirebase = MutableLiveData<Task<Unit>>()
-    val taskFirebase : LiveData<Task<Unit>>
-        get() = _taskFirebase
 
 
     init {
@@ -60,29 +52,22 @@ class HomeViewModel @Inject constructor(
                     _stateNote.value = NoteHomeUiState.Empty
                 }else{
                     _stateNote.value = NoteHomeUiState.Success(it)
-                    _stateNoteResult.value = NoteHomeResultUiState.Success(
-                        listResult
-                    )
                 }
             }
         }
     }
 
-    cd  
-
-    fun onCloudNote(item: NoteItem){
-        viewModelScope.launch{
-            val result = insertNoteFirebase.invoke(item)
-        }
-    }
-
-    fun onPin(id: Long, pin: Boolean){
-        viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
-
+    fun onSearch(text:String){
+        viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
+            _stateNoteResult.value = NoteHomeResultUiState.Error(throwable.localizedMessage?:"")
         }){
-
+            searchUseCase.invoke(text).collect{
+                _stateNoteResult.value = NoteHomeResultUiState.Success(it)
+            }
         }
     }
+
+
 
 
 

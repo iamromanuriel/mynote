@@ -2,9 +2,9 @@ package com.roman.mynote.ui.home
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.gson.Gson
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
 import com.roman.mynote.ui.option_note.BottomSheetActionNote
@@ -22,18 +22,18 @@ import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
 import com.roman.mynote.utils.set
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
-import com.romanuriel.utils.ResultSearchNoteData
+import com.romanuriel.utils.SnackBarLength
+import com.romanuriel.utils.showSnackBar
 import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
-    private val viewModel : HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModels()
     private val binding: FragmentHomeBinding by viewBinding()
-    private lateinit var adapterNote : NoteAdapter
+    private lateinit var adapterNote: NoteAdapter
     private lateinit var adapterResult: NoteResultSearchAdapter
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,44 +47,42 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             activity.let { dialog.show(it!!.supportFragmentManager, dialog.tag) }
         }
 
-        adapterResult = NoteResultSearchAdapter {  }
+        adapterResult = NoteResultSearchAdapter {
+            findNavController().navigate(
+                HomeFragmentDirections.actionHomeFragmentToNoteFragment(1)
+            )
+        }
 
         binding.apply {
             setRecyclerView()
-            onRefresh()
-            buttonNew()
             manageOptionCreateNote()
+            setSearchView()
         }
 
-        //binding.extendedActionAddNewNote.setOnClickListener(this)
-        binding.ivUserProfileImage.setOnClickListener(this)
+        binding.ivSetting.setOnClickListener(this)
         binding.ibNotice.setOnClickListener(this)
+
         observeDataList()
-        binding.swipeRefresh.setOnRefreshListener { viewModel.onListNote() }
-
-
         observerDataResult()
     }
 
-    private fun observeDataList(){
+    private fun observeDataList() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.notes.collect{uiState ->
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.notes.collect { uiState ->
                     binding.progressBar.visibility = View.GONE
-                    if(uiState == NoteHomeUiState.Empty) binding.animEmpty.visibility = View.VISIBLE
+                    if (uiState == NoteHomeUiState.Empty) binding.animEmpty.visibility =
+                        View.VISIBLE
                     else binding.animEmpty.visibility = View.GONE
 
-                    when(uiState){
-
-                        is NoteHomeUiState.Loading ->{
-                        }
-                        is NoteHomeUiState.Success ->{
-                            Log.d("TAG-NOTE-LIST", Gson().toJson(uiState.list))
+                    when (uiState) {
+                        is NoteHomeUiState.Success -> {
                             adapterNote.setData(uiState.list)
-
                         }
-                        is NoteHomeUiState.Error -> { toast(uiState.msg) }
-                        else -> { Log.d("TAG-RESULT-NOTE",uiState.toString()) }
+                        is NoteHomeUiState.Error -> {
+                            toast(uiState.msg)
+                        }
+                        else -> {}
                     }
                 }
             }
@@ -92,24 +90,26 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
     }
 
 
-    private fun observerDataResult(){
+    private fun observerDataResult() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.stateNoteResult.collect{ uiState ->
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.stateNoteResult.collect { uiState ->
 
-                    when(uiState){
-                        is NoteHomeResultUiState.Success ->{
-
-
-                        }
-                        is NoteHomeResultUiState.Empty ->{
-                            Log.d("TAG-EMPTY",uiState.toString())
+                    when (uiState) {
+                        is NoteHomeResultUiState.Success -> {
+                            adapterResult.setData(uiState.list)
                         }
 
-                        is NoteHomeResultUiState.Loading ->{
-                            Log.d("TAG-LOADING",uiState.toString())
+                        is NoteHomeResultUiState.Error -> {
+                            binding.root.showSnackBar(uiState.msg, SnackBarLength.MEDIUM)
                         }
-                        else ->{}
+
+                        is NoteHomeResultUiState.Empty -> {
+                            toast("Resultado vacio")
+                        }
+
+                        is NoteHomeResultUiState.Loading -> {
+                        }
                     }
                 }
             }
@@ -117,35 +117,32 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
     }
 
     private fun FragmentHomeBinding.manageOptionCreateNote() = this.layoutFloatingOption.apply {
-         set(DataOption(actionNote = { dialog ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewNoteFragment())},
-             actionAudio = { dialog -> findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRecordAudioFragment()) },
-             actionReminder = { dialog ->  findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReminderFragment()) }))
-    }
-
-    private fun FragmentHomeBinding.onRefresh() = this.apply {
-        swipeRefresh.setOnRefreshListener { viewModel.onListNote() }
+        set(
+            DataOption(actionNote = { findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNewNoteFragment()) },
+                actionAudio = { findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToRecordAudioFragment()) },
+                actionReminder = { findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToReminderFragment()) })
+        )
     }
 
     private fun FragmentHomeBinding.setRecyclerView() = this.recyclerView.apply {
         layoutManager = GridLayoutManager(requireContext(), 2)
         adapter = adapterNote
     }
-    private fun FragmentHomeBinding.buttonNew() = this.apply {
 
-    }
-
-
-    override fun onClick(view: View) {
-        when (view.id) {
-
-            binding.ivUserProfileImage.id ->{
-                val action = findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingFragment())
-            }
-            binding.ibNotice.id ->{
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlertFragment())
-            }
+    private fun FragmentHomeBinding.setSearchView() = this.apply {
+        includeResult.settingRecyclerview.layoutManager = LinearLayoutManager(requireContext())
+        includeResult.settingRecyclerview.adapter = adapterResult
+        searchView.editText.doOnTextChanged { text, _, _, _ ->
+            viewModel.onSearch(text.toString())
         }
     }
 
-
+    override fun onClick(view: View) {
+        when (view.id) {
+            binding.ivSetting.id -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingFragment())
+            }
+            binding.ibNotice.id -> {}
+        }
+    }
 }

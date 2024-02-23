@@ -2,6 +2,8 @@ package com.roman.mynote.ui.note
 
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
@@ -13,22 +15,22 @@ import com.roman.mynote.utils.ToolbarModel
 import com.roman.mynote.utils.set
 import com.romanuriel.core.Task
 import com.romanuriel.utils.Axis
+import com.romanuriel.utils.SnackBarLength
 import com.romanuriel.utils.showSnackBar
+import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
+import org.w3c.dom.Text
 
 @AndroidEntryPoint
 class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
     private val viewModel : NewNoteViewModel by viewModels()
     private val binding: FragmentNewNoteBinding by viewBinding()
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             setToolbar()
             observeTask()
         }
-
-
     }
 
     private fun FragmentNewNoteBinding.setToolbar() = this.layoutToolbar.apply {
@@ -40,7 +42,7 @@ class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
                 buttonEnd = {
                     val title = binding.textTitle1.text.toString()
                     val content = binding.textContent.text.toString()
-                    if(content.isEmpty()){
+                    if(title.isEmpty() || content.isEmpty()){
                         binding.layoutTextContent.error = requireContext().getString(R.string.requeride)
                     }else{
                         viewModel.newNote(title, content)
@@ -54,7 +56,7 @@ class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
         viewModel.task.observe(viewLifecycleOwner){ task ->
             when(task){
                 is Task.Error -> {
-                    root.showSnackBar(task.exception.localizedMessage?:"", 12)
+                    root.showSnackBar(task.exception.localizedMessage?:"", SnackBarLength.MEDIUM)
                 }
                 is Task.Success -> { findNavController().navigateUp() }
 
@@ -62,6 +64,5 @@ class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
             }
         }
     }
-
 
 }

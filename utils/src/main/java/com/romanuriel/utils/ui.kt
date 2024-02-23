@@ -2,38 +2,44 @@
 
 package com.romanuriel.utils
 
+import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
-import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.google.android.material.color.MaterialColors
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.dialog.MaterialDialogs
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 
 enum class ToastLength(val length: Int) {
     SHORT(Toast.LENGTH_SHORT),
     LONG(Toast.LENGTH_LONG)
 }
 
-fun Fragment.toast(message: Any, length: ToastLength = ToastLength.SHORT) {
+enum class SnackBarLength(val length: Int){
+    SHORT(200),
+    MEDIUM(400),
+    LONG(600)
 
+}
+
+fun Fragment.toast(message: Any, length: ToastLength = ToastLength.SHORT) {
     when(message){
         is String ->{  }
         is Int ->{ message.toString() }
         is @receiver:StringRes Int -> { message.toString() }
     }
-
     Toast.makeText(requireContext(), message.toString(), length.length).show()
 }
-
-
 
 @ColorInt
 fun Context.getColorFromAttr(
@@ -45,8 +51,9 @@ fun Context.getColorFromAttr(
     return textColor
 }
 
-fun View.showSnackBar(message: String, duration: Int) = Snackbar.make(
-    this, message, duration
+@SuppressLint("PrivateResource")
+fun View.showSnackBar(message: String, duration: SnackBarLength) = Snackbar.make(
+    this, message, duration.length
 ).apply {
     this.setBackgroundTint(
         MaterialColors.getColor(
@@ -56,6 +63,7 @@ fun View.showSnackBar(message: String, duration: Int) = Snackbar.make(
     this.setTextColor(ContextCompat.getColor(this@showSnackBar.context, com.google.android.material.R.color.m3_ref_palette_black))
 }.show()
 
+@SuppressLint("PrivateResource")
 fun View.showSnackBar(
     message: String, duration: Int, actionName: String?, action: (() -> Unit)?
 ) = Snackbar.make(
@@ -80,16 +88,17 @@ fun Fragment.dialog(@StringRes resTitle: Int, message: String, cancel: () -> Uni
         .setIcon(R.drawable.ic_warning)
         .setTitle(resources.getString(resTitle))
         .setMessage(message)
-        .setNegativeButton(resources.getString(android.R.string.cancel)){dialog, which ->
+        .setNegativeButton(resources.getString(android.R.string.cancel)){ dialog, _ ->
             cancel()
             dialog.dismiss()
         }
-        .setPositiveButton(resources.getString(android.R.string.ok)){dialog, which ->
+        .setPositiveButton(resources.getString(android.R.string.ok)){ dialog, _ ->
             ok()
             dialog.dismiss()
         }
         .show()
-
-
 }
 
+fun Fragment.showDialog(dialog: DialogFragment) = this.apply {
+    activity.let { dialog.show(it!!.supportFragmentManager, dialog.tag) }
+}

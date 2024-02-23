@@ -37,7 +37,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.animEmpty.playAnimation()
         adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
@@ -58,7 +57,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             manageOptionCreateNote()
             setSearchView()
         }
-
         binding.ivSetting.setOnClickListener(this)
         binding.ibNotice.setOnClickListener(this)
 

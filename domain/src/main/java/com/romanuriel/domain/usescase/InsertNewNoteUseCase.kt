@@ -19,12 +19,11 @@ class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepos
 
         return when (type) {
             TypeCategory.AUDIO -> {
-                val audio = Audio(
-                    categoryId = type.id,
-                    title = title,
-                    audioFilePath = content,
-                    dateCreate = Date()
-                )
+                val audio = Audio()
+                    audio.categoryId = type.id
+                    audio.title = title
+                    audio.audioFilePath = content
+                    audio.create = Date()
 
                 val query = repository.insertAudio(audio)
 
@@ -57,8 +56,8 @@ class InsertNewNoteUseCase @Inject constructor(private val repository: NoteRepos
                 note.categoryId = type.id
                 note.title = title
                 note.content = content
-                note.dateCreate = Date()
-                note.lastUpdate = Date()
+                note.create = Date()
+                note.update = Date()
 
                 val query = repository.insert(note)
                 if (query > 0) {

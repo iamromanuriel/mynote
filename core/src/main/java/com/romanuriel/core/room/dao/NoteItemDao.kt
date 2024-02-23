@@ -17,8 +17,7 @@ interface NoteItemDao {
             "SELECT id, title FROM AUDIO_NOTE WHERE title LIKE '%' || :text || '%'")
     fun searchItemByTitle(text: String): Flow<List<NoteItemResult>>
 
-
-    @Query("SELECT id, categoryId, title, dateCreate AS dataCreate, content, pin FROM NOTE " +
+    @Query("SELECT id, categoryId, title, `create` AS dataCreate, content, pin FROM NOTE " +
             "UNION " +
             "SELECT id, categoryId, title, dateCreate AS dateCreate,'', pin FROM REMINDERS")
     fun allNote(): Flow<List<NoteItem>>

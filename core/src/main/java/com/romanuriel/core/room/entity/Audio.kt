@@ -6,6 +6,7 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.romanuriel.core.converter.ConverterDate
+import com.romanuriel.core.room.model.CoreNote
 import java.util.Date
 
 @Entity(
@@ -22,11 +23,5 @@ import java.util.Date
 )
 @TypeConverters(ConverterDate::class)
 data class Audio (
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    val categoryId: Long ?= 0,
-    val title: String ?= "",
-    val audioFilePath: String ?= "",
-    val dateCreate: Date ?= null,
-    val pin: Boolean = false
-)
+    var audioFilePath: String ?= ""
+):CoreNote()

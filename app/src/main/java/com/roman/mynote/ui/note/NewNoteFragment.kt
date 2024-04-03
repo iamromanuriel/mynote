@@ -2,8 +2,6 @@ package com.roman.mynote.ui.note
 
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
@@ -16,10 +14,8 @@ import com.roman.mynote.utils.set
 import com.romanuriel.core.Task
 import com.romanuriel.utils.Axis
 import com.romanuriel.utils.SnackBarLength
-import com.romanuriel.utils.showSnackBar
-import com.romanuriel.utils.toast
+import com.romanuriel.utils.snackBar
 import dagger.hilt.android.AndroidEntryPoint
-import org.w3c.dom.Text
 
 @AndroidEntryPoint
 class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
@@ -56,7 +52,7 @@ class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
         viewModel.task.observe(viewLifecycleOwner){ task ->
             when(task){
                 is Task.Error -> {
-                    root.showSnackBar(task.exception.localizedMessage?:"", SnackBarLength.MEDIUM)
+                    root.snackBar(task.exception.localizedMessage?:"", SnackBarLength.MEDIUM)
                 }
                 is Task.Success -> { findNavController().navigateUp() }
 

@@ -1,15 +1,10 @@
 package com.roman.mynote.ui.reminder
 
-import android.os.Binder
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.animation.AlphaAnimation
 import android.viewbinding.library.fragment.viewBinding
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentNewReminderBinding
 import com.roman.mynote.ui.BaseFragment
@@ -18,14 +13,12 @@ import com.roman.mynote.utils.set
 import com.romanuriel.core.Task
 import com.romanuriel.utils.Axis
 import com.romanuriel.utils.SnackBarLength
-import com.romanuriel.utils.enums.StateNewReminder
+import com.romanuriel.utils.dialogTimePickerBasic
 import com.romanuriel.utils.showDialog
-import com.romanuriel.utils.showSnackBar
+import com.romanuriel.utils.snackBar
 import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
-import java.util.Calendar
-import java.util.Date
 
 @AndroidEntryPoint
 class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
@@ -36,6 +29,8 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
         super.onViewCreated(view, savedInstanceState)
         binding.apply {
             setToolbar()
+            selectTime()
+            selectDay()
         }
 
         viewModel.apply {
@@ -43,13 +38,23 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
             observerReminderTask()
         }
     }
-    private fun dialogTimePicker(): MaterialTimePicker{
-        return MaterialTimePicker.Builder()
-            .setTimeFormat(TimeFormat.CLOCK_12H)
-            .setHour(12)
-            .setMinute(10)
-            .setTitleText(getString(R.string.title_picker_time))
-            .build()
+    private fun FragmentNewReminderBinding.selectTime() = this.apply {
+        optionTime.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked) {
+                dialogTimePickerBasic({hour, minute ->
+                    viewModel.setHora(hour, minute)
+                },{
+                    optionTime.isChecked = false
+                })
+            }
+        }
+    }
+
+    private fun FragmentNewReminderBinding.selectDay() = this.apply {
+        calendar.minDate = System.currentTimeMillis()
+        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
+            viewModel.setDay(year, month, dayOfMonth)
+        }
     }
 
     private fun FragmentNewReminderBinding.setToolbar() = this.layoutToolbar.apply {
@@ -58,7 +63,10 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
                 titleString = getString(R.string.reminder),
                 action = findNavController()::navigateUp,
                 textButtonEnd = requireContext().getString(R.string.save),
-                buttonEnd = { viewModel.onCreateReminder(binding.editTextTitle.text.toString()) }
+                buttonEnd = {
+                    val title = binding.inputTitle.editText?.text.toString()
+                    viewModel.onCreateReminder(title)
+                }
             )
         )
     }
@@ -68,7 +76,7 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
             when (mTask) {
                 is Task.Success -> { findNavController().navigateUp() }
                 is Task.Error -> {
-                    binding.root.showSnackBar(mTask.exception.localizedMessage ?: "", SnackBarLength.SHORT)
+                    binding.root.snackBar(mTask.exception.localizedMessage ?: "", SnackBarLength.SHORT)
                 }
                 is Task.Loading ->{  }
                 else ->{}
@@ -77,31 +85,6 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
     }
 
     private fun ReminderViewModel.observerReminderTask() = this.apply {
-        stateProgress.observe(viewLifecycleOwner){ mReminder ->
-            when(mReminder){
-                StateNewReminder.EMPTY ->{
-                    binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
-                        viewModel.setDay(year, month, dayOfMonth)
-                    }
-                }
-                StateNewReminder.HAS_D ->{
-                    val timerDialog = dialogTimePicker()
 
-                    showDialog(timerDialog)
-                    timerDialog.addOnPositiveButtonClickListener {
-                        val hour = timerDialog.hour
-                        val minute = timerDialog.minute
-
-                        viewModel.setHora(hour, minute)
-                    }
-                }
-                StateNewReminder.HAS_H ->{
-                    binding.calendarView.visibility = View.INVISIBLE
-                    binding.layoutInputTitle.visibility = View.VISIBLE
-                    binding.editTextTitle.visibility = View.VISIBLE
-                }
-                StateNewReminder.HAS_T ->{  }
-            }
-        }
     }
 }

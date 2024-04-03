@@ -52,7 +52,7 @@ fun Context.getColorFromAttr(
 }
 
 @SuppressLint("PrivateResource")
-fun View.showSnackBar(message: String, duration: SnackBarLength) = Snackbar.make(
+fun View.snackBar(message: String, duration: SnackBarLength) = Snackbar.make(
     this, message, duration.length
 ).apply {
     this.setBackgroundTint(
@@ -60,11 +60,11 @@ fun View.showSnackBar(message: String, duration: SnackBarLength) = Snackbar.make
             this.context, com.google.android.material.R.attr.colorSurface, Color.WHITE
         )
     )
-    this.setTextColor(ContextCompat.getColor(this@showSnackBar.context, com.google.android.material.R.color.m3_ref_palette_black))
+    this.setTextColor(ContextCompat.getColor(this@snackBar.context, com.google.android.material.R.color.m3_ref_palette_black))
 }.show()
 
 @SuppressLint("PrivateResource")
-fun View.showSnackBar(
+fun View.snackBar(
     message: String, duration: Int, actionName: String?, action: (() -> Unit)?
 ) = Snackbar.make(
     this, message, duration
@@ -74,9 +74,9 @@ fun View.showSnackBar(
             this.context, com.google.android.material.R.attr.colorSurface, Color.WHITE
         )
     )
-    this.setTextColor(ContextCompat.getColor(this@showSnackBar.context, com.google.android.material.R.color.m3_ref_palette_black))
+    this.setTextColor(ContextCompat.getColor(this@snackBar.context, com.google.android.material.R.color.m3_ref_palette_black))
     action?.let { action ->
-        this.setActionTextColor(ContextCompat.getColor(this@showSnackBar.context, com.google.android.material.R.color.m3_ref_palette_dynamic_primary70))
+        this.setActionTextColor(ContextCompat.getColor(this@snackBar.context, com.google.android.material.R.color.m3_ref_palette_dynamic_primary70))
         setAction(actionName) {
             action.invoke()
         }
@@ -97,6 +97,19 @@ fun Fragment.dialog(@StringRes resTitle: Int, message: String, cancel: () -> Uni
             dialog.dismiss()
         }
         .show()
+}
+
+fun Fragment.dialogTimePickerBasic( onPositive: (hour: Int, minute: Int)-> Unit, onNegative: () -> Unit ) = this.apply{
+    val dialog = MaterialTimePicker.Builder()
+        .setTimeFormat(TimeFormat.CLOCK_12H)
+        .setHour(12)
+        .setMinute(10)
+        .setTitleText("Select time")
+        .build()
+    dialog.dialog?.setCanceledOnTouchOutside(false)
+    dialog.addOnPositiveButtonClickListener { onPositive(dialog.hour, dialog.minute) }
+    dialog.addOnNegativeButtonClickListener { onNegative() }
+    showDialog(dialog)
 }
 
 fun Fragment.showDialog(dialog: DialogFragment) = this.apply {

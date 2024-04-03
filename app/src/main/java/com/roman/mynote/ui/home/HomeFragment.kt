@@ -23,7 +23,7 @@ import com.roman.mynote.utils.set
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
 import com.romanuriel.utils.SnackBarLength
-import com.romanuriel.utils.showSnackBar
+import com.romanuriel.utils.snackBar
 import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -99,7 +99,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                         }
 
                         is NoteHomeResultUiState.Error -> {
-                            binding.root.showSnackBar(uiState.msg, SnackBarLength.MEDIUM)
+                            binding.root.snackBar(uiState.msg, SnackBarLength.MEDIUM)
                         }
 
                         is NoteHomeResultUiState.Empty -> {

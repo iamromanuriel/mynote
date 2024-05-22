@@ -31,12 +31,23 @@ data class ReminderModel (
 
     fun getDate(): Date {
         val date = Calendar.getInstance()
-        date.set(Calendar.DAY_OF_MONTH, day!!.day)
-        date.set(Calendar.MONTH, day!!.month)
-        date.set(Calendar.YEAR, day!!.year)
-        date.set(Calendar.HOUR, time!!.hora)
-        date.set(Calendar.MINUTE, time!!.min)
-        date.set(Calendar.SECOND, 0)
+        when{
+            day != null -> {
+                date.set(Calendar.DAY_OF_MONTH, day!!.day)
+                date.set(Calendar.MONTH, day!!.month)
+                date.set(Calendar.YEAR, day!!.year)
+            }
+            time != null -> {
+                date.set(Calendar.HOUR, time!!.hora)
+                date.set(Calendar.MINUTE, time!!.min)
+                date.set(Calendar.SECOND, 0)
+            }
+            time == null ->{
+                date.set(Calendar.HOUR, 0)
+                date.set(Calendar.MINUTE, 0)
+                date.set(Calendar.SECOND, 0)
+            }
+        }
         return date.time
     }
 }

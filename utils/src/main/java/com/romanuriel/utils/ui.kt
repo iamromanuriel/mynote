@@ -3,7 +3,6 @@
 package com.romanuriel.utils
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.view.View
@@ -29,7 +28,6 @@ enum class SnackBarLength(val length: Int){
     SHORT(200),
     MEDIUM(400),
     LONG(600)
-
 }
 
 fun Fragment.toast(message: Any, length: ToastLength = ToastLength.SHORT) {
@@ -97,6 +95,14 @@ fun Fragment.dialog(@StringRes resTitle: Int, message: String, cancel: () -> Uni
             dialog.dismiss()
         }
         .show()
+}
+
+fun Fragment.inputDialog(
+    title: String,
+    hint: String,
+    onInput: (String)-> Unit,
+){
+
 }
 
 fun Fragment.dialogTimePickerBasic( onPositive: (hour: Int, minute: Int)-> Unit, onNegative: () -> Unit ) = this.apply{

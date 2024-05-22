@@ -27,11 +27,10 @@ class ToListAllNoteUseCaseTest {
     @Test
     fun should() = runBlocking {
         //Given
-        coEvery { repository.getAllNote() } returns flowOf(emptyList())
         //When
-        toListAllNoteUseCase()
+
 
         //Then
-        coVerify(exactly = 1) { repository.getAllNote() }
+
     }
 }

@@ -1,5 +1,6 @@
 package com.roman.mynote.ui.reminder
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,31 +16,30 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class ReminderViewModel @Inject constructor(private val insertNewNoteUseCase: InsertNewNoteUseCase ): ViewModel() {
     private val ioThread = CoroutineScope(Dispatchers.IO)
     private val _task = MutableLiveData<Task<Unit>>()
-    private var reminderModel: ReminderModel
+    private var reminderModel = ReminderModel()
     val task : LiveData<Task<Unit>>
         get() = _task
     private val _stateProgress = MutableLiveData<StateNewReminder>()
     val stateProgress : LiveData<StateNewReminder>
         get() = _stateProgress
     init {
-        reminderModel = ReminderModel()
         _stateProgress.postValue(reminderModel.getState())
     }
 
-    fun onCreateReminder(title: String) {
+    fun onCreateReminder(title: String = "") {
         ioThread.launch(CoroutineExceptionHandler { _, throwable ->
-            _task.postValue(Task.Error(Exception(throwable.localizedMessage)))
+            _task.postValue(Task.Error(Exception(throwable.message)))
         }) {
-            reminderModel.title = title
-            if(reminderModel.getState() == StateNewReminder.HAS_T){
+            if(title.isNotEmpty()){
                 val result = insertNewNoteUseCase.invoke(
-                    title = reminderModel.title?: "",
+                    title = title,
                     dateCreate = reminderModel.getDate().time,
                     type = TypeCategory.REMINDER
                 )

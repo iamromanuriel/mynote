@@ -14,11 +14,9 @@ import com.romanuriel.core.Task
 import com.romanuriel.utils.Axis
 import com.romanuriel.utils.SnackBarLength
 import com.romanuriel.utils.dialogTimePickerBasic
-import com.romanuriel.utils.showDialog
 import com.romanuriel.utils.snackBar
 import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
@@ -36,7 +34,7 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
         viewModel.apply {
             observeTask()
             observerReminderTask()
-        }
+        }                                                                                                           
     }
     private fun FragmentNewReminderBinding.selectTime() = this.apply {
         optionTime.setOnCheckedChangeListener { _, isChecked ->
@@ -76,7 +74,7 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
             when (mTask) {
                 is Task.Success -> { findNavController().navigateUp() }
                 is Task.Error -> {
-                    binding.root.snackBar(mTask.exception.localizedMessage ?: "", SnackBarLength.SHORT)
+                    binding.root.snackBar(mTask.exception.localizedMessage ?: "Error", SnackBarLength.SHORT)
                 }
                 is Task.Loading ->{  }
                 else ->{}

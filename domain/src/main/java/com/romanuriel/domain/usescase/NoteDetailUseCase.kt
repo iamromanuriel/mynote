@@ -8,7 +8,5 @@ import javax.inject.Inject
 class NoteDetailUseCase @Inject constructor(
     private val repository: NoteRepository
 ) {
-    operator fun invoke(id: Long): Flow<NoteDetail> {
-        return repository.getNoteDetailById(id)
-    }
+
 }

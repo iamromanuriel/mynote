@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
 import androidx.room.Update
 import com.romanuriel.core.room.entity.Note
+import com.romanuriel.core.room.model.NoteItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -20,6 +21,6 @@ interface NoteDao {
     fun update(note: Note)
     @Delete
     fun delete(note: Note)
-
-
+    @Query("SELECT id, categoryId, title, pin FROM NOTE")
+    fun getToListNote(): Flow<List<NoteItem>>
 }

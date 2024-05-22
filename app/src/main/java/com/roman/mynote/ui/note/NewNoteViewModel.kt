@@ -1,6 +1,5 @@
 package com.roman.mynote.ui.note
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,10 +26,10 @@ class NewNoteViewModel @Inject constructor(private val insertNewNoteUseCase: Ins
             _task.postValue(Task.Error(Exception(throwable.localizedMessage)))
         }) {
             _task.postValue(Task.Loading)
-
             _task.postValue(
                 insertNewNoteUseCase.invoke(
                     title = title,
+                    dateCreate = Calendar.getInstance().time.time,
                     content = note,
                     type = TypeCategory.NOTE
                 )

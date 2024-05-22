@@ -19,41 +19,17 @@ import java.util.Date
 
 class NoteAdapter(
     val onClickRoot: (NoteItem) -> Unit,
-    val onLogClick: () -> Unit
+    val onLogClick: (view: View) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private var listNoteItem = mutableListOf<NoteItem>()
 
     inner class NoteViewHolder(val binding: NoteCardBinding) : ViewHolder(binding.root) {
         fun build(noteItems: NoteItem) {
-
-            binding.textViewTitle.text = noteItems.title
-            val date = Date(noteItems.dataCreate!!)
-            Log.d("TAG-DATE-NOTE",date.toString())
-            binding.textDate.text = TimeManager(binding.root.context).getTimeAgo(date)
-
-            when(noteItems.categoryId){
-                TypeCategory.NOTE.id -> {
-                    binding.textNotes.text  = noteItems.content
-                    binding.textNotes.visibility = View.VISIBLE
-                }
-                TypeCategory.REMINDER.id -> {
-                    binding.textNotes.visibility = View.GONE
-                }
-                TypeCategory.AUDIO.id -> {
-                    binding.textNotes.visibility = View.GONE
-
-                }
-                else ->  {  }
-            }
-
-            binding.notesContainer.setOnClickListener {
-                onClickRoot(noteItems)
-            }
-            binding.root.setOnLongClickListener {
-                onLogClick()
-                true
-            }
+            binding.title.text = noteItems.title
+            binding.root.setOnClickListener { onClickRoot(noteItems) }
+            binding.root.let { it.setOnLongClickListener { onLogClick(it)
+                true} }
         }
     }
 

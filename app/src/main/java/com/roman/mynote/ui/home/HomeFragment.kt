@@ -2,8 +2,10 @@ package com.roman.mynote.ui.home
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -15,7 +17,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentHomeBinding
-import com.roman.mynote.ui.option_note.BottomSheetActionNote
 import com.roman.mynote.utils.DataOption
 import com.roman.mynote.utils.adapter.NoteAdapter
 import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
@@ -41,9 +42,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         adapterNote = NoteAdapter({ _ ->
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
         }
-        ) {
-            val dialog = BottomSheetActionNote()
-            activity.let { dialog.show(it!!.supportFragmentManager, dialog.tag) }
+        ) { card ->
+            binding.showMenu(card)
         }
 
         adapterResult = NoteResultSearchAdapter {
@@ -95,6 +95,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
                     when (uiState) {
                         is NoteHomeResultUiState.Success -> {
+                            Log.d("SUCCESS-LIST",uiState.list.toString())
                             adapterResult.setData(uiState.list)
                         }
 
@@ -107,6 +108,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
                         }
 
                         is NoteHomeResultUiState.Loading -> {
+
                         }
                     }
                 }
@@ -131,7 +133,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         includeResult.settingRecyclerview.layoutManager = LinearLayoutManager(requireContext())
         includeResult.settingRecyclerview.adapter = adapterResult
         searchView.editText.doOnTextChanged { text, _, _, _ ->
-            viewModel.onSearch(text.toString())
+            if(text!!.isNotEmpty()) viewModel.onSearch(text.toString())
         }
     }
 
@@ -140,7 +142,23 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
             binding.ivSetting.id -> {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToSettingFragment())
             }
-            binding.ibNotice.id -> {}
+            binding.ibNotice.id -> { findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToAlertFragment()) }
         }
+    }
+
+    private fun FragmentHomeBinding.showMenu(view: View) = this.apply {
+        val popup = PopupMenu(requireContext(), view)
+        popup.menuInflater.inflate(R.menu.menu_action_note, popup.menu)
+
+        popup.setOnMenuItemClickListener { item ->
+            when(item.itemId){
+                R.id.pin ->{  }
+                R.id.delete -> {  }
+                R.id.edit_note ->{  }
+            }
+            true
+        }
+        popup.setOnDismissListener {  }
+        popup.show()
     }
 }

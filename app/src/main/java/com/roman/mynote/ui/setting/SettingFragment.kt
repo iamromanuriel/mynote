@@ -11,7 +11,6 @@ import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentSettingBinding
 import com.roman.mynote.utils.ProfileData
 import com.roman.mynote.utils.ToolbarModel
-import com.roman.mynote.utils.adapter.AdapterSetting
 import com.roman.mynote.utils.set
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,11 +19,9 @@ class SettingFragment:Fragment(R.layout.fragment_setting) {
 
     private val binding: FragmentSettingBinding by viewBinding()
     private val viewModel: SettingViewModel by viewModels()
-    private lateinit var adapterSetting: AdapterSetting
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapterSetting = AdapterSetting()
         binding.apply {
             setToolbar()
             setDataProfile()
@@ -51,7 +48,7 @@ class SettingFragment:Fragment(R.layout.fragment_setting) {
 
     private fun FragmentSettingBinding.setRecyclerview() = this.settingRecyclerview.apply {
         layoutManager = LinearLayoutManager(requireContext())
-        adapter = adapterSetting
+
     }
 
 }

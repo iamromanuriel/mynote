@@ -13,6 +13,7 @@ import android.view.View
 import android.viewbinding.library.fragment.viewBinding
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.roman.mynote.R
 import com.roman.mynote.databinding.LayoutAudioRecordingBinding
@@ -31,7 +32,7 @@ import java.io.IOException
 class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x){
 
     private val binding: LayoutAudioRecordingBinding by viewBinding()
-    private var grabadora: MediaRecorder? = null
+    private val viewModel: RecordAudioViewModel by viewModels()
     var ruta : String? = null
 
 
@@ -40,9 +41,14 @@ class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x
 
         binding.apply {
             setToolbar()
-            grabar()
             reproducir()
         }
+        binding.btnStart.setOnClickListener{ viewModel.starRecording() }
+        binding.btnPause.setOnClickListener { viewModel.stopRecording() }
+        viewModel.apply {
+            showStateRecorder()
+        }
+
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
             ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO), 1000)
@@ -78,8 +84,16 @@ class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x
         }
     }
 
+    private fun RecordAudioViewModel.showStateRecorder() = this.apply {
+        stateRecording.observe(this@RecordAudioFragment){ stateRecording ->
+            binding.textTime.text = stateRecording.getElapsedTime().toString()
+            stateRecording.msg()?.let { toast(it) }
 
-    fun LayoutAudioRecordingBinding.grabar() = this.apply{
+        }
+    }
+
+
+    /*fun LayoutAudioRecordingBinding.grabar() = this.apply{
         btnStart.setOnClickListener {
             if(grabadora == null){
                 ruta = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC), "test.mp3").absolutePath
@@ -106,7 +120,7 @@ class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x
             }
         }
 
-    }
+    }*/
 
     fun  LayoutAudioRecordingBinding.reproducir() = this.apply {
         btnPause.setOnClickListener {

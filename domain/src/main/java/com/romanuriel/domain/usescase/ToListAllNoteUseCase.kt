@@ -8,7 +8,7 @@ import javax.inject.Inject
 class ToListAllNoteUseCase @Inject constructor(
     private val repository: NoteRepository
 ) {
-    operator fun invoke(): Flow<List<NoteItem>> {
-        return repository.getAllNote()
+    operator fun invoke(): Flow<List<NoteItem>>{
+        return repository.toListNote()
     }
 }

@@ -19,12 +19,12 @@ fun LayoutButtonFloattingOptionBinding.set(data: DataOption) = this.apply {
 
             endView.animate()
                 .translationY(0f)
-                .setDuration(500)
+                .setDuration(300)
                 .start()
         } else {
             endView.animate()
                 .translationY(endView.height.toFloat())
-                .setDuration(500)
+                .setDuration(300)
                 .withEndAction { endView.visibility = View.GONE }
                 .start()
         }

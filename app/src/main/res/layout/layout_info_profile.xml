@@ -39,8 +39,6 @@
             android:layout_margin="@dimen/margin_medium"
             tools:text="@string/user_name" />
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

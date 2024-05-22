@@ -6,7 +6,7 @@ import javax.inject.Inject
 
 class DeleteNoteUseCase @Inject constructor(private val repository: NoteRepository) {
 
-    suspend operator fun invoke(id: Long): Task<Unit>{
+    /*suspend operator fun invoke(id: Long): Task<Unit>{
         val task = repository.deleteById(id)
 
         return if (task > 0){
@@ -14,6 +14,6 @@ class DeleteNoteUseCase @Inject constructor(private val repository: NoteReposito
         }else{
             Task.Error(Exception("Error al eliminar"))
         }
-    }
+    }*/
 
 }

@@ -1,6 +1,6 @@
 package com.roman.mynote.ui.main_activity
 
-import android.util.Log
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.romanuriel.domain.repository.MainRepository

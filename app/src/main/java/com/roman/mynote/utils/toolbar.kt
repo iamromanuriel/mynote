@@ -2,6 +2,7 @@
 
 package com.roman.mynote.utils
 
+import android.view.Gravity
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -13,6 +14,7 @@ data class ToolbarModel(
     @StringRes
     val title: Int = R.string.app_name,
     val titleString: String = "",
+    val gravityTitle : Int = Gravity.START,
     @DrawableRes
     val icon: Int = com.romanuriel.utils.R.drawable.ic_arrow_back,
     val action:() -> Unit,
@@ -29,6 +31,7 @@ data class ToolbarModel(
 fun BarActionLayoutBinding.set(toolbarModel: ToolbarModel) = this.apply {
     if(toolbarModel.titleString.isNotEmpty()) textViewTitle.text = toolbarModel.titleString
     else textViewTitle.text = root.context.getText(toolbarModel.title)
+    textViewTitle.gravity = toolbarModel.gravityTitle
 
     materialButtonClose.apply {
         setIconResource(toolbarModel.icon)
@@ -43,6 +46,7 @@ fun BarActionLayoutBinding.set(toolbarModel: ToolbarModel) = this.apply {
         }
         setOnClickListener { toolbarModel.buttonEnd() }
     }
+
     return@apply
     toolbarModel.endIcon?.let {
         materialButtonEnd.apply {

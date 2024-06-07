@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.roman.mynote.R
 import com.roman.mynote.databinding.FragmentDetailNoteBinding
+import com.roman.mynote.utils.DialogInput
 import com.roman.mynote.utils.ToolbarModel
 import com.roman.mynote.utils.set
 import com.romanuriel.core.Task
@@ -59,7 +60,7 @@ class NoteDetailFragment : Fragment(R.layout.fragment_detail_note) {
     private fun observerTask(){
         viewModel.task.observe(this.viewLifecycleOwner){task ->
             when(task){
-                is Task.Error ->{toast(task.exception.localizedMessage)}
+                is Task.Error ->{toast(task.exception?.localizedMessage?:"")}
                 is Task.Success ->{}
             }
         }

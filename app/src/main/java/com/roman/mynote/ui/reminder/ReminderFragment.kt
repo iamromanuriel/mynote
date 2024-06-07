@@ -74,7 +74,7 @@ class ReminderFragment: BaseFragment(R.layout.fragment_new_reminder, Axis.x) {
             when (mTask) {
                 is Task.Success -> { findNavController().navigateUp() }
                 is Task.Error -> {
-                    binding.root.snackBar(mTask.exception.localizedMessage ?: "Error", SnackBarLength.SHORT)
+                    binding.root.snackBar(mTask.exception?.localizedMessage ?: "Error", SnackBarLength.SHORT)
                 }
                 is Task.Loading ->{  }
                 else ->{}

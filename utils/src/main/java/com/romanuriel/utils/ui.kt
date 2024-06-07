@@ -97,14 +97,6 @@ fun Fragment.dialog(@StringRes resTitle: Int, message: String, cancel: () -> Uni
         .show()
 }
 
-fun Fragment.inputDialog(
-    title: String,
-    hint: String,
-    onInput: (String)-> Unit,
-){
-
-}
-
 fun Fragment.dialogTimePickerBasic( onPositive: (hour: Int, minute: Int)-> Unit, onNegative: () -> Unit ) = this.apply{
     val dialog = MaterialTimePicker.Builder()
         .setTimeFormat(TimeFormat.CLOCK_12H)

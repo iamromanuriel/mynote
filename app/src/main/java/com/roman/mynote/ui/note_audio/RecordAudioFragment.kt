@@ -1,14 +1,8 @@
 package com.roman.mynote.ui.note_audio
 
 import android.Manifest
-import android.app.Application
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.media.MediaPlayer
-import android.media.MediaRecorder
 import android.os.Bundle
-import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.viewbinding.library.fragment.viewBinding
 import androidx.core.app.ActivityCompat
@@ -17,36 +11,35 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.roman.mynote.R
 import com.roman.mynote.databinding.LayoutAudioRecordingBinding
+import com.roman.mynote.recorder.RecordingState
 import com.roman.mynote.ui.BaseFragment
+import com.roman.mynote.utils.DialogInput
 import com.roman.mynote.utils.ToolbarModel
 import com.roman.mynote.utils.set
-import com.romanuriel.utils.AudioRecorderManager
+import com.romanuriel.core.Task
 import com.romanuriel.utils.Axis
 import com.romanuriel.utils.dialog
 import com.romanuriel.utils.toast
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.IOException
 
 @AndroidEntryPoint
 class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x){
 
     private val binding: LayoutAudioRecordingBinding by viewBinding()
     private val viewModel: RecordAudioViewModel by viewModels()
-    var ruta : String? = null
-
+    private var isRecording = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
             setToolbar()
-            reproducir()
         }
         binding.btnStart.setOnClickListener{ viewModel.starRecording() }
         binding.btnPause.setOnClickListener { viewModel.stopRecording() }
         viewModel.apply {
             showStateRecorder()
+            observeSave()
         }
 
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
@@ -61,80 +54,59 @@ class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x
             ToolbarModel(
                 title = R.string.audio,
                 action = {
-                    dialog(
-                        R.string.title_cancel_record,
-                        requireContext().getString(R.string.message_cancel_record),
-                        {  },
-                        { findNavController().navigateUp() })
-                },
-                textButtonEnd = requireContext().getString(R.string.save),
-                buttonEnd = { }
+                    if(isRecording){
+                        dialog(
+                            resTitle = R.string.title_cancel_record,
+                            message =  requireContext().getString(R.string.message_cancel_record),
+                            cancel = {},
+                            ok = { viewModel.onCancel() })
+                    } else findNavController().popBackStack()
+                }
             )
         )
     }
 
-    private fun LayoutAudioRecordingBinding.onRecorder() = this.apply {
-        AudioRecorderManager(requireActivity().application).apply {
-            getRecordingTime().observe(viewLifecycleOwner){ time ->
-                textTime.text = time
-            }
-            btnStart.setOnClickListener {
-                startRecording()
+    private fun RecordAudioViewModel.observeSave() = this.apply {
+        save.observe(this@RecordAudioFragment){
+            when(it){
+                is Task.Success -> {
+                    findNavController().popBackStack()
+                }
+                is Task.Error -> {
+                    it.exception?.let { toast(it) }
+                    it.throwable?.let { toast(it.message?:"") }
+                    findNavController().popBackStack()
+                }
             }
         }
     }
 
     private fun RecordAudioViewModel.showStateRecorder() = this.apply {
         stateRecording.observe(this@RecordAudioFragment){ stateRecording ->
+            when(stateRecording.isRecoding()){
+                RecordingState.PASSIVE -> {  }
+                RecordingState.STAR -> {
+                    //binding.imageMic.colorIconDraw(android.R.color.holo_green_light)
+                    isRecording = true
+                    binding.textStatus.visibility = View.VISIBLE
+                }
+                RecordingState.END -> {
+                    isRecording = false
+                    DialogInput(requireContext(), title = "Quieres guardar el audio?", ok = {
+                        viewModel.onSave(it)
+                    }).apply {
+                        show()
+                    }
+                }
+                RecordingState.CANCEL -> {
+                    findNavController().popBackStack()
+                }
+            }
+
+            binding.textTime.visibility = View.VISIBLE
             binding.textTime.text = stateRecording.getElapsedTime().toString()
             stateRecording.msg()?.let { toast(it) }
 
         }
     }
-
-
-    /*fun LayoutAudioRecordingBinding.grabar() = this.apply{
-        btnStart.setOnClickListener {
-            if(grabadora == null){
-                ruta = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_MUSIC), "test.mp3").absolutePath
-                grabadora = MediaRecorder()
-                grabadora?.setAudioSource(MediaRecorder.AudioSource.MIC)
-                grabadora?.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                grabadora?.setAudioEncoder(MediaRecorder.AudioEncoder.AAC)
-                grabadora?.setOutputFile(ruta)
-                try {
-                    grabadora?.prepare()
-                    grabadora?.start()
-                    btnStart.setBackgroundColor(Color.RED)
-                }catch (e: IOException){
-                    Log.d("TAG-ERROR-RECORDER",e.localizedMessage)
-                }
-            }else{
-                try{
-                    grabadora?.stop()
-                    grabadora?.release()
-                    btnStart.setBackgroundColor(Color.GREEN)
-                }catch (e: IOException){
-                    Log.d("TAG-ERROR-RECORDER",e.localizedMessage)
-                }
-            }
-        }
-
-    }*/
-
-    fun  LayoutAudioRecordingBinding.reproducir() = this.apply {
-        btnPause.setOnClickListener {
-            val mediaPlayer = MediaPlayer()
-            try{
-                mediaPlayer.setDataSource(ruta)
-                mediaPlayer.prepare()
-            }catch (e: IOException){
-                println(e.localizedMessage)
-            }
-            mediaPlayer.start()
-
-        }
-    }
-
 }
-

@@ -52,10 +52,9 @@ class NewNoteFragment : BaseFragment(R.layout.fragment_new_note, Axis.x) {
         viewModel.task.observe(viewLifecycleOwner){ task ->
             when(task){
                 is Task.Error -> {
-                    root.snackBar(task.exception.localizedMessage?:"", SnackBarLength.MEDIUM)
+                    root.snackBar(task.exception?.localizedMessage?:"", SnackBarLength.MEDIUM)
                 }
                 is Task.Success -> { findNavController().navigateUp() }
-
                 is Task.Loading -> { binding.loading.visibility = View.VISIBLE }
             }
         }

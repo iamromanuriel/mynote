@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
         android:ellipsize="end"
-        android:gravity="start"
+        tools:gravity="start"
         android:maxLines="1"
         android:padding="5dp"
         android:textAppearance="?attr/textAppearanceTitleMedium"

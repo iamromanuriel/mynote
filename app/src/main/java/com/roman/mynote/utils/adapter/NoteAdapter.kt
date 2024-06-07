@@ -9,11 +9,13 @@ import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.google.gson.Gson
 import com.roman.mynote.R
 import com.roman.mynote.databinding.NoteCardBinding
 import com.roman.mynote.utils.TimeManager
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.utils.TypeCategory
+import timber.log.Timber
 import java.lang.IndexOutOfBoundsException
 import java.util.Date
 
@@ -26,6 +28,7 @@ class NoteAdapter(
 
     inner class NoteViewHolder(val binding: NoteCardBinding) : ViewHolder(binding.root) {
         fun build(noteItems: NoteItem) {
+            Log.d("ItemNoteBuilt",Gson().toJson(noteItems))
             binding.title.text = noteItems.title
             binding.root.setOnClickListener { onClickRoot(noteItems) }
             binding.root.let { it.setOnLongClickListener { onLogClick(it)

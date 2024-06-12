@@ -23,6 +23,7 @@ import com.roman.mynote.utils.adapter.NoteResultSearchAdapter
 import com.roman.mynote.utils.set
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
+import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.utils.SnackBarLength
 import com.romanuriel.utils.snackBar
 import com.romanuriel.utils.toast
@@ -39,16 +40,17 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.animEmpty.playAnimation()
-        adapterNote = NoteAdapter({ _ ->
-            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment(1))
+        adapterNote = NoteAdapter({
+            viewModel.onSelectNote(it)
+            findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToNoteFragment())
         }
-        ) { card ->
-            binding.showMenu(card)
+        ) { card, noteItem ->
+            binding.showMenu(card, noteItem)
         }
 
         adapterResult = NoteResultSearchAdapter {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToNoteFragment(1)
+                HomeFragmentDirections.actionHomeFragmentToNoteFragment()
             )
         }
 
@@ -146,14 +148,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
         }
     }
 
-    private fun FragmentHomeBinding.showMenu(view: View) = this.apply {
+    private fun FragmentHomeBinding.showMenu(view: View, itemNote: NoteItem) = this.apply {
         val popup = PopupMenu(requireContext(), view)
         popup.menuInflater.inflate(R.menu.menu_action_note, popup.menu)
 
         popup.setOnMenuItemClickListener { item ->
             when(item.itemId){
                 R.id.pin ->{  }
-                R.id.delete -> {  }
+                R.id.delete -> { viewModel.onDeleteNoteItem(itemNote) }
                 R.id.edit_note ->{  }
             }
             true

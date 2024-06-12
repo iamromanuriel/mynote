@@ -23,4 +23,6 @@ interface NoteDao {
     fun delete(note: Note)
     @Query("SELECT id, categoryId, title, pin FROM NOTE")
     fun getToListNote(): Flow<List<NoteItem>>
+    @Query("DELETE FROM NOTE WHERE id =:id")
+    suspend fun deleteById(id: Long): Int
 }

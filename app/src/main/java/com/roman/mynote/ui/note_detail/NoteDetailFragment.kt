@@ -25,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class NoteDetailFragment : Fragment(R.layout.fragment_detail_note) {
     private val viewModel : NoteDetailViewModel by viewModels()
     private val binding: FragmentDetailNoteBinding by viewBinding()
-    private val arg : NoteDetailFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +39,7 @@ class NoteDetailFragment : Fragment(R.layout.fragment_detail_note) {
     private fun FragmentDetailNoteBinding.setData() = this.apply {
         includeResultMainNote.set(
             CardNoteMainModel(
-                "Reunion 18 Abril con Dapesa",
+                "Reunion 18 Abril",
                 R.drawable.calendar_with_a_clock_time_tools_icon_icons_com_56831
             )
         )

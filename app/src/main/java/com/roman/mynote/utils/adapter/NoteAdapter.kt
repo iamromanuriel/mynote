@@ -1,38 +1,38 @@
 package com.roman.mynote.utils.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.motion.widget.MotionLayout
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.google.gson.Gson
 import com.roman.mynote.R
 import com.roman.mynote.databinding.NoteCardBinding
-import com.roman.mynote.utils.TimeManager
 import com.romanuriel.core.room.model.NoteItem
-import com.romanuriel.utils.TypeCategory
-import timber.log.Timber
-import java.lang.IndexOutOfBoundsException
-import java.util.Date
+import com.romanuriel.utils.loadImage
 
 class NoteAdapter(
     val onClickRoot: (NoteItem) -> Unit,
-    val onLogClick: (view: View) -> Unit
+    val onLogClick: (view: View, noteItem: NoteItem) -> Unit
 ) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     private var listNoteItem = mutableListOf<NoteItem>()
 
     inner class NoteViewHolder(val binding: NoteCardBinding) : ViewHolder(binding.root) {
         fun build(noteItems: NoteItem) {
-            Log.d("ItemNoteBuilt",Gson().toJson(noteItems))
+            when(noteItems.categoryId){
+                1L -> { binding.imageRef.loadImage(R.drawable.publicalo) }
+                2L -> { binding.imageRef.loadImage(R.drawable.onda_sonora) }
+                3L -> { binding.imageRef.loadImage(R.drawable.veintiseis) }
+            }
             binding.title.text = noteItems.title
             binding.root.setOnClickListener { onClickRoot(noteItems) }
-            binding.root.let { it.setOnLongClickListener { onLogClick(it)
-                true} }
+            binding.root.let {
+                it.setOnLongClickListener {
+                    onLogClick(it, noteItems)
+                    true
+                }
+            }
         }
     }
 
@@ -59,48 +59,4 @@ class NoteAdapter(
     fun getItem(position: Int): NoteItem{
         return listNoteItem[position]
     }
-}
-
-class SwipeToLeftCallback(
-    private val adapter: RecyclerView.Adapter<*>,
-    private val noteCallback: (NoteItem) -> Unit
-) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT){
-    override fun onMove(
-        recyclerView: RecyclerView,
-        viewHolder: ViewHolder,
-        target: ViewHolder
-    ): Boolean {
-        return false
-    }
-
-    override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-        val position = viewHolder.adapterPosition
-        val noteItem = getItemAtPosition(position)
-
-
-    }
-
-    override fun clearView(recyclerView: RecyclerView, viewHolder: ViewHolder) {
-        super.clearView(recyclerView, viewHolder)
-        val motionLayout = (viewHolder.itemView as? MotionLayout)
-        val viewX  = viewHolder.itemView.x
-        val width = recyclerView.width
-
-        val progress = if(viewX < 0){
-            0f
-        }else{
-            1f
-        }
-        motionLayout?.progress = progress
-    }
-
-    private fun getItemAtPosition(position: Int): NoteItem{
-        val itemCount = adapter.itemCount
-        if(position in 0 until itemCount){
-            return (adapter as NoteAdapter).getItem(position)
-        }
-        throw IndexOutOfBoundsException("Invalid position $position")
-    }
-
-
 }

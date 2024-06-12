@@ -5,6 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.roman.mynote.utils.stateflow.NoteHomeResultUiState
 import com.roman.mynote.utils.stateflow.NoteHomeUiState
+import com.romanuriel.core.room.model.NoteItem
+import com.romanuriel.domain.repository.NoteRepository
+import com.romanuriel.domain.usescase.DeleteNoteUseCase
 import com.romanuriel.domain.usescase.SearchNoteUseCase
 import com.romanuriel.domain.usescase.ToListAllNoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +20,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val searchUseCase: SearchNoteUseCase,
-    private val toListAllNoteUseCase: ToListAllNoteUseCase
+    private val toListAllNoteUseCase: ToListAllNoteUseCase,
+    private val repositoryNote: NoteRepository,
+    private val deleteNoteUseCase: DeleteNoteUseCase
 ): ViewModel() {
 
     private val _stateNote = MutableStateFlow<NoteHomeUiState>(NoteHomeUiState.Loading)
@@ -27,9 +32,6 @@ class HomeViewModel @Inject constructor(
     private val _stateNoteResult = MutableStateFlow<NoteHomeResultUiState>(NoteHomeResultUiState.Loading)
     val stateNoteResult : StateFlow<NoteHomeResultUiState>
         get() = _stateNoteResult
-
-
-
 
     init {
         onListNote()
@@ -59,8 +61,15 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onSelectNote(noteItem: NoteItem){
+        repositoryNote.setNoteItem(noteItem)
+    }
 
+    fun onDeleteNoteItem(noteItem: NoteItem){
+        viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
 
-
-
+        }){
+            deleteNoteUseCase.invoke(noteItem)
+        }
+    }
 }

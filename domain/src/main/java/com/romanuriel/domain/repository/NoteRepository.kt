@@ -1,5 +1,7 @@
 package com.romanuriel.domain.repository
 
+import android.util.Log
+import com.google.gson.Gson
 import com.romanuriel.core.room.AppDatabase
 import com.romanuriel.core.room.entity.Note
 import com.romanuriel.core.room.model.NoteDetail
@@ -12,6 +14,16 @@ import javax.inject.Inject
 class NoteRepository @Inject constructor(
     private val db: AppDatabase
 ) {
+    private var noteItem : NoteItem?= null
+
+    fun setNoteItem(noteItem: NoteItem){
+        this.noteItem = noteItem
+        Log.d("onSelectNoteItem", Gson().toJson(noteItem))
+    }
+
+    fun getNoteItem(): NoteItem?{
+        return this.noteItem
+    }
 
     /*fun searchNoteByTitle(
         text: String
@@ -25,5 +37,13 @@ class NoteRepository @Inject constructor(
 
     fun toListNote(): Flow<List<NoteItem>>{
         return db.noteDao().getToListNote()
+    }
+
+    fun getNote(): Flow<Note>{
+        return db.noteDao().getById(noteItem?.id?:0)
+    }
+
+    suspend fun deleteById(id: Long): Int{
+        return db.noteDao().deleteById(id)
     }
 }

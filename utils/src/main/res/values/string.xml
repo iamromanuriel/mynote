@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="time_ago"> Hace </string>
+    <string name="time_secouds"> s </string>
+    <string name="time_minute"> m </string>
+    <string name="time_hour"> Hora </string>
+    <string name="time_yesterday">Ayer</string>
+    <string name="text_title">Titulo</string>
+    <string name="time_ago_moment">Hace un momento</string>
+</resources>

@@ -27,43 +27,31 @@
                     android:orientation="vertical"
                     android:layout_marginBottom="@dimen/margin_medium">
 
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/title_input_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/margin_medium">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/text_title" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/container_main_note"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/margin_medium"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="visible">
 
                         <include
                             android:id="@+id/include_result_main_note"
-                            layout="@layout/layout_info_note_main" />
+                            layout="@layout/layout_info_note_main"/>
 
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/container_graphic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/margin_medium"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/container_main_note">
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <com.github.mikephil.charting.charts.PieChart
-                                android:id="@+id/graphic"
-                                android:layout_width="match_parent"
-                                android:layout_height="300dp"
-                                android:layout_margin="@dimen/margin_small"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
@@ -74,7 +62,8 @@
                         android:layout_margin="@dimen/margin_medium"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/container_graphic">
+                        app:layout_constraintTop_toBottomOf="@+id/container_graphic"
+                        android:visibility="gone">
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="match_parent"
@@ -93,15 +82,22 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/card_play_audio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin_medium"
+                        android:visibility="gone">
+
+                        <include
+                            android:id="@+id/include_play_record"
+                            layout="@layout/layout_play_recording"/>
+
+                    </com.google.android.material.card.MaterialCardView>
 
                 </LinearLayout>
-
             </ScrollView>
-
-
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

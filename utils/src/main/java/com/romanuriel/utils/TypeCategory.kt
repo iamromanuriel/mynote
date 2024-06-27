@@ -6,3 +6,13 @@ enum class TypeCategory(val id: Long) {
     NOTE(1)
 }
 
+fun toIdFromConverter(id: Long): TypeCategory?{
+    var mValue : TypeCategory? = null
+    for (value in TypeCategory.values()){
+        if(value.id == id){
+            mValue = value
+        }
+    }
+    return mValue
+}
+

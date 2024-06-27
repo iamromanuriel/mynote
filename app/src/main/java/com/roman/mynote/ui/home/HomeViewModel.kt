@@ -8,6 +8,7 @@ import com.roman.mynote.utils.stateflow.NoteHomeUiState
 import com.romanuriel.core.room.model.NoteItem
 import com.romanuriel.domain.repository.NoteRepository
 import com.romanuriel.domain.usescase.DeleteNoteUseCase
+import com.romanuriel.domain.usescase.PinNoteUseCase
 import com.romanuriel.domain.usescase.SearchNoteUseCase
 import com.romanuriel.domain.usescase.ToListAllNoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +23,8 @@ class HomeViewModel @Inject constructor(
     private val searchUseCase: SearchNoteUseCase,
     private val toListAllNoteUseCase: ToListAllNoteUseCase,
     private val repositoryNote: NoteRepository,
-    private val deleteNoteUseCase: DeleteNoteUseCase
+    private val deleteNoteUseCase: DeleteNoteUseCase,
+    private val pinUsesCase: PinNoteUseCase
 ): ViewModel() {
 
     private val _stateNote = MutableStateFlow<NoteHomeUiState>(NoteHomeUiState.Loading)
@@ -70,6 +72,14 @@ class HomeViewModel @Inject constructor(
 
         }){
             deleteNoteUseCase.invoke(noteItem)
+        }
+    }
+
+    fun onPin(noteItem: NoteItem){
+        viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+
+        }){
+
         }
     }
 }

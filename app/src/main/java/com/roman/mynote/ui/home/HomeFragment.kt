@@ -154,7 +154,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), View.OnClickListener {
 
         popup.setOnMenuItemClickListener { item ->
             when(item.itemId){
-                R.id.pin ->{  }
+                R.id.pin ->{ viewModel.onPin(itemNote) }
                 R.id.delete -> { viewModel.onDeleteNoteItem(itemNote) }
                 R.id.edit_note ->{  }
             }

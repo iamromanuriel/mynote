@@ -104,7 +104,7 @@ class RecordAudioFragment : BaseFragment(R.layout.layout_audio_recording, Axis.x
             }
 
             binding.textTime.visibility = View.VISIBLE
-            binding.textTime.text = stateRecording.getElapsedTime().toString()
+            binding.textTime.text = stateRecording.getElapsedTime()?: "00:00:00"
             stateRecording.msg()?.let { toast(it) }
 
         }

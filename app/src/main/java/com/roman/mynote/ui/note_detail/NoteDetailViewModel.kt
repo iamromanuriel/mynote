@@ -3,7 +3,10 @@ package com.roman.mynote.ui.note_detail
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.roman.mynote.mediaplay.AudioPlayManager
+import com.roman.mynote.utils.enums.StateInfo
 import com.romanuriel.core.Task
 import com.romanuriel.domain.usescase.DeleteNoteUseCase
 import com.romanuriel.domain.usescase.NoteDetailUseCase
@@ -15,13 +18,18 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteDetailViewModel @Inject constructor(
     private val deleteNoteUseCase: DeleteNoteUseCase,
-    private val noteDetailUseCase: NoteDetailUseCase
+    noteDetailUseCase: NoteDetailUseCase,
+    private val audioPlayManager: AudioPlayManager
 ): ViewModel() {
-    private var arg = 0L
+    private var stateInfo : StateInfo = StateInfo.SHOW
     private val _task = MutableLiveData<Task<Unit>>()
     val task : LiveData<Task<Unit>>
         get() = _task
+    private val _state = MutableLiveData<StateInfo>()
+    val state : LiveData<StateInfo>
+        get() = _state
 
+    val note = noteDetailUseCase.invoke().asLiveData()
 
     init {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
@@ -31,14 +39,20 @@ class NoteDetailViewModel @Inject constructor(
         }
     }
 
-    fun setArg(arg: Long){
-        this.arg = arg
-    }
-
-
-
     fun onDeleteById(id: Long){
         viewModelScope
+    }
+
+    fun onPlayFile(){
+        viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
+
+        }){
+
+        }
+    }
+
+    fun onChangeState(state: StateInfo){
+        _state.postValue(state)
     }
 
 }

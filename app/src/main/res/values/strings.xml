@@ -36,23 +36,15 @@
     <string name="example_title_notice">Mañana tienes reunion a las 4</string>
     <string name="example_description_notice">El dia 16 de Septiembre hay una reunion a las 6:00 PM.</string>
 
-
-    <string name="time_ago"> Hace </string>
-    <string name="time_secouds"> s </string>
-    <string name="time_minute"> m </string>
-    <string name="time_hour"> Hora </string>
-    <string name="time_yesterday">Ayer</string>
-    <string name="description_notification">Personaliza las notificaciones que recibiras</string>
-    <string name="notifications">Notificaciones</string>
-    <string name="account">Cuenta</string>
-    <string name="text_example_name_audio">Audio871295</string>
-    <string name="text_title">Titulo</string>
     <string name="note">Nota</string>
     <string name="audio">Audio</string>
+    <string name="notifications">Notificaciones</string>
+    <string name="account">Cuenta</string>
+    <string name="description_notification">Personaliza las notificaciones que recibiras</string>
+    <string name="text_example_name_audio">Audio871295</string>
     <string name="reminder">Recordatorio</string>
-    <string name="time_ago_moment">Hace un momento</string>
     <!--    TEXT DIALOG    -->
-    <string name="title_cancel_record">Se cancelara la grabacion</string>}
+    <string name="title_cancel_record">Se cancelara la grabacion</string>
     <string name="message_cancel_record">¿Esta seguro de cancelar grabacion?</string>
 
     <string name="title_picker_time">Select time</string>

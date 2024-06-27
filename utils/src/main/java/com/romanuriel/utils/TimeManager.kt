@@ -1,19 +1,19 @@
-package com.roman.mynote.utils
+package com.romanuriel.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.roman.mynote.R
-import com.roman.mynote.utils.resource.IResourceProvider
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.text.SimpleDateFormat
 import java.util.Date
 import javax.inject.Inject
-import javax.inject.Singleton
+import kotlin.jvm.Throws
 
 
-class TimeManager (
-    private val resource: Context
+class TimeManager @Inject constructor(
+     @ApplicationContext private val resource: Context
 ) {
     @SuppressLint("SimpleDateFormat")
+    @Throws
     fun getTimeAgo(date: Date): String{
         val currentTime = System.currentTimeMillis()
         val inputTime = date.time
@@ -53,5 +53,32 @@ class TimeManager (
         val dayFormat = SimpleDateFormat("yyyyMMdd")
         return dayFormat.format(date) == dayFormat.format(yesterday)
     }
+
+    fun toDateSimpleDMA(date: Date): String{
+        return "${date.day} "
+    }
+
+    @SuppressLint("DefaultLocale")
+    fun toTimeCountSimpleHMS(millis: Long): String{
+        val seconds = (millis / 1000).toInt()
+        val hours = seconds / 3600
+        val remainingSeconds = seconds % 3600
+        val minutes = remainingSeconds / 60
+        val remainingSecondsAfterMinutes = remainingSeconds % 60
+        return String.format("%02d:%02d:%02d", hours, minutes, remainingSecondsAfterMinutes)
+    }
+}
+
+fun main(){
+    val elapsedTime = 14484000L
+    val seconds = (elapsedTime / 1000).toInt()
+    val hours = seconds / 3600
+    val remainingSeconds = seconds % 3600
+    val minutes = remainingSeconds / 60
+    val remainingSecondsAfterMinutes = remainingSeconds % 60
+
+    val text = String.format("%02d:%02d:%02d", hours, minutes, remainingSecondsAfterMinutes)
+    print("Tiempo $text")
+
 }
 

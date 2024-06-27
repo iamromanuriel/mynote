@@ -6,6 +6,7 @@ import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.romanuriel.utils.TimeManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.IOException
@@ -17,16 +18,17 @@ enum class RecordingState{ PASSIVE,STAR, END, CANCEL }
 
 class RecordingStateModel(
     private val isRecording: RecordingState? = RecordingState.PASSIVE,
-    private val elapsedTime: Long? = null,
+    private val elapsedTime: String? = "00:00:00",
     private var msg: String? = null
 ) {
     fun isRecoding(): RecordingState? = isRecording
-    fun getElapsedTime(): Long? = elapsedTime
+    fun getElapsedTime(): String? = elapsedTime
     fun msg(): String? = msg
 }
 
 class AudioRecorderManager @Inject constructor(
-    @ApplicationContext val context: Context
+    @ApplicationContext val context: Context,
+    val timeManager: TimeManager
 ) {
     private var _recordingStateModel = MutableLiveData<RecordingStateModel>()
     val recordingStateModel: LiveData<RecordingStateModel> = _recordingStateModel
@@ -69,7 +71,7 @@ class AudioRecorderManager @Inject constructor(
                     private var elapsedTime = 0L
                     override fun run() {
                         elapsedTime += 1000
-                        _recordingStateModel.postValue(RecordingStateModel(RecordingState.STAR, elapsedTime))
+                        _recordingStateModel.postValue(RecordingStateModel(RecordingState.STAR, timeManager.toTimeCountSimpleHMS(elapsedTime)))
                     }
                 }, 0, 1000)
             }

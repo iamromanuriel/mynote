@@ -21,11 +21,20 @@ class NoteAdapter(
     inner class NoteViewHolder(val binding: NoteCardBinding) : ViewHolder(binding.root) {
         fun build(noteItems: NoteItem) {
             when(noteItems.categoryId){
-                1L -> { binding.imageRef.loadImage(R.drawable.publicalo) }
+                1L -> {
+                    binding.containerIcon.setBackgroundColor(binding.root.context.getColor(R.color.CustomColor1))
+                    binding.imageRef.loadImage(R.drawable.publicalo)
+                }
                 2L -> { binding.imageRef.loadImage(R.drawable.onda_sonora) }
                 3L -> { binding.imageRef.loadImage(R.drawable.veintiseis) }
             }
             binding.title.text = noteItems.title
+            if(noteItems.pin == true) {
+                binding.btnPin.visibility == View.VISIBLE
+            }
+            else {
+                binding.btnPin.visibility == View.GONE
+            }
             binding.root.setOnClickListener { onClickRoot(noteItems) }
             binding.root.let {
                 it.setOnLongClickListener {

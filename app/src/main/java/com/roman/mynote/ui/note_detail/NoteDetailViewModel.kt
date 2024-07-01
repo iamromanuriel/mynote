@@ -1,6 +1,7 @@
 package com.roman.mynote.ui.note_detail
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -8,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.roman.mynote.mediaplay.AudioPlayManager
 import com.roman.mynote.utils.enums.StateInfo
 import com.romanuriel.core.Task
+import com.romanuriel.domain.model.NoteDetail
 import com.romanuriel.domain.usescase.DeleteNoteUseCase
 import com.romanuriel.domain.usescase.NoteDetailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,10 +28,21 @@ class NoteDetailViewModel @Inject constructor(
     val task : LiveData<Task<Unit>>
         get() = _task
     private val _state = MutableLiveData<StateInfo>()
-    val state : LiveData<StateInfo>
-        get() = _state
 
-    val note = noteDetailUseCase.invoke().asLiveData()
+    val progressPlaying = audioPlayManager.getCurrentProgress()
+    val statePlaying = audioPlayManager.getState()
+
+    private val note = noteDetailUseCase.invoke().asLiveData()
+
+    val noteDetail: LiveData<Pair<NoteDetail?, StateInfo>> = MediatorLiveData<Pair<NoteDetail?, StateInfo>>().apply {
+        addSource(note) { noteDetail ->
+            value = Pair(noteDetail, _state.value?:stateInfo)
+        }
+        addSource(_state) { stateInfo ->
+            value = Pair(note.value, stateInfo)
+        }
+    }
+
 
     init {
         viewModelScope.launch(CoroutineExceptionHandler { _, throwable ->
@@ -43,16 +56,12 @@ class NoteDetailViewModel @Inject constructor(
         viewModelScope
     }
 
-    fun onPlayFile(){
-        viewModelScope.launch(CoroutineExceptionHandler { coroutineContext, throwable ->
-
-        }){
-
-        }
+    fun onPlayFile(filePath: String){
+        audioPlayManager.play(filePath)
     }
 
-    fun onChangeState(state: StateInfo){
-        _state.postValue(state)
+    fun onChangeState(){
+
     }
 
 }
